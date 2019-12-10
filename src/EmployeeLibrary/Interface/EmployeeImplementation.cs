@@ -13,7 +13,7 @@ using CRUDOperationAPI.Connections;
 
 namespace CRUDOperationAPI.Implementation
 {
-    public class EmployeeImplementation : IConnectionService, IEmployeeService
+    public class EmployeeImplementation : IConnection, IEmployee
     {
         private string _connectionString;
 
@@ -26,25 +26,25 @@ namespace CRUDOperationAPI.Implementation
             _connectionString = Connections(connectionString);
           
         }
-        public List<EmployeeContactsRole> GetAll()
+        public List<EmployeeContacts> GetAll()
         {
-            var data = new List<EmployeeContactsRole>();
+            var data = new List<EmployeeContacts>();
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                data = db.Query<EmployeeContactsRole>("SELECT Employees.EmployeeID, Contacts.ContactID, Contacts.FirstName, Contacts.LastName, Contacts.Address, Contacts.Email, Contacts.ContactNumber, Contacts.EmergencyContactNumber, Employees.Designation, Employees.Salary, Employees.IsFullTimer FROM Employees Join Contacts On (Employees.ContactID = Contacts.ContactID) Where Employees.isWorking = 1").ToList();
+                data = db.Query<EmployeeContacts>("SELECT Employees.EmployeeID, Contacts.ContactID, Contacts.FirstName, Contacts.LastName, Contacts.Address, Contacts.Email, Contacts.ContactNumber, Contacts.EmergencyContactNumber, Employees.Designation, Employees.Salary, Employees.WorkingHrPerday, Employees.IsFullTimer FROM Employees Join Contacts On (Employees.ContactID = Contacts.ContactID)").ToList();
             }
             return data;
         }
 
-        public EmployeeContactsRole GetEmployeeByID(int id)
+        public EmployeeContacts GetEmployeeByID(int id)
         {
             try
              {
-                EmployeeContactsRole data;
+                EmployeeContacts data;
 
                 using (IDbConnection db = new SqlConnection(_connectionString))
                 {
-                    data = db.Query<EmployeeContactsRole>("SELECT Employees.EmployeeID, Contacts.ContactID, Contacts.FirstName, Contacts.LastName, Contacts.Address, Contacts.Email, Contacts.ContactNumber, Contacts.EmergencyContactNumber, Employees.Designation, Employees.Salary, Employees.IsFullTimer, Employees.isWorking FROM Employees Join Contacts On (Employees.ContactID = Contacts.ContactID) where Employees.EmployeeID = @EmployeeID", new { EmployeeID = id }).SingleOrDefault();
+                    data = db.Query<EmployeeContacts>("SELECT Employees.EmployeeID, Contacts.ContactID, Contacts.FirstName, Contacts.LastName, Contacts.Address, Contacts.Email, Contacts.ContactNumber, Contacts.EmergencyContactNumber, Employees.Designation, Employees.Department, Employees.Salary, Employees.WorkingHrPerday, Employees.IsFullTimer FROM Employees Join Contacts On (Employees.ContactID = Contacts.ContactID) where Contacts.ContactID = @ContactID", new { ContactID = id }).SingleOrDefault();
                 }
                 return data;
             }
@@ -54,7 +54,7 @@ namespace CRUDOperationAPI.Implementation
             }
             
         }
-        public int RemoveEmployee(int id)
+        public int DeleteEmployee(int id)
         {
             try
             {
@@ -62,10 +62,10 @@ namespace CRUDOperationAPI.Implementation
                 //var data = new Employee();
                 using (IDbConnection db = new SqlConnection(_connectionString))
                 {
-                    string data = "Update Employees SET IsWorking = 0 where EmployeeID = @EmployeeID";
+                    string data = "Delete from Contacts where ContactID = @ContactID";
                     exe = db.Execute(data, new
                     {
-                        EmployeeID = id
+                        ContactID = id
                     });
                 }
                 return exe;
@@ -77,7 +77,7 @@ namespace CRUDOperationAPI.Implementation
             
         }
 
-        public void PostEmployee(EmployeeContactsRole emp)
+        public void PostEmployee(EmployeeContacts emp)
         {
             //var data = new Employee();
 
@@ -92,16 +92,12 @@ namespace CRUDOperationAPI.Implementation
                     parameter.Add("@Email", emp.Email);
                     parameter.Add("@ContactNumber", emp.ContactNumber);
                     parameter.Add("@EmergyContactNumber", emp.EmergencyContactNumber);
-                    parameter.Add("@ProfilePicture", emp.ProfilePicture);
                     parameter.Add("@Designation", emp.Designation);
                     parameter.Add("@Salary", emp.Salary);
+                    parameter.Add("@WorkingHrPerDa", emp.WorkingHrPerDay);
                     parameter.Add("@IsFullTimer", emp.IsFullTimer);
-                    parameter.Add("@IsWorking", emp.IsWorking);
-                    parameter.Add("@UserName", emp.UserName);
-                    parameter.Add("@Password", emp.Password);
-                    parameter.Add("@RoleID", emp.RoleID);
-                    parameter.Add("@DepartmentID", emp.DepartmentID);
-                    parameter.Add("@CreatedTimeStamp", emp.CreatedTimeStamp);
+                    parameter.Add("@Department", emp.Department);
+
 
                     db.Execute("InsertIntoContactsAndEmployee", parameter, commandType: CommandType.StoredProcedure);
                    
@@ -113,7 +109,7 @@ namespace CRUDOperationAPI.Implementation
             }
 
         }
-        public void PutEmployee(EmployeeContactsRole emp)
+        public void PutEmployee(EmployeeContacts emp)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
@@ -128,6 +124,7 @@ namespace CRUDOperationAPI.Implementation
                     parameter.Add("@EmergencyContactNumber", emp.EmergencyContactNumber);
                     parameter.Add("@Designation", emp.Designation);
                     parameter.Add("@Salary", emp.Salary);
+                    parameter.Add("@WorkingHrPerDa", emp.WorkingHrPerDay);
                     parameter.Add("@IsFullTimer", emp.IsFullTimer);
                     parameter.Add("@Department", emp.Department);
                     parameter.Add("@ContactID", emp.ContactID);
@@ -147,7 +144,7 @@ namespace CRUDOperationAPI.Implementation
             {
                 // string sqlQuery = "Select Count(Distinct(EmployeeID)) from Employees";
                 // exe= db.Execute(sqlQuery);
-                 exe = db.Query<int>("Select Count(Distinct(EmployeeID)) from Employees where IsWorking = 1").FirstOrDefault();
+                 exe = db.Query<int>("Select Count(Distinct(EmployeeID)) from Employees").FirstOrDefault();
             }
             return exe;
         }

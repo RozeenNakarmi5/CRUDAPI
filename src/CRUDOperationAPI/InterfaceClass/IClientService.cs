@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CRUDOperationAPI.InterfaceClass
 {
-    public interface IClient
+    public interface IClientService
     {
         List<ClientProjectViewModel> GetClientProject();
         ClientProjectViewModel GetClientByID(int id);

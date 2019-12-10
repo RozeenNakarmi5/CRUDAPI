@@ -13,8 +13,8 @@ namespace CRUDOperationAPI.Controllers
     [Route("api/[controller]")]
     public class ClientController : Controller
     {
-        private IClient _client;
-        public ClientController(IClient client)
+        private IClientService _client;
+        public ClientController(IClientService client)
         {
             _client = client;
         }

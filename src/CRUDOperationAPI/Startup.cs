@@ -48,9 +48,9 @@ namespace CRUDOperationAPI
             services.AddDbContext<EmployeeDbContext>(item =>
             item.UseSqlServer(Configuration.GetConnectionString("myconn")));
             services.AddCors();
-            services.AddScoped<IEmployee, EmployeeImplementation>();
-            services.AddScoped<IClient, ClientImplementation>();
-            services.AddScoped<IProject, ProjectImplementation>();
+            services.AddScoped<IEmployeeService, EmployeeImplementation>();
+            services.AddScoped<IClientService, ClientImplementation>();
+            services.AddScoped<IProjectService, ProjectImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
