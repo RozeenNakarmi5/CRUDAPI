@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CRUDOperationAPI.InterfaceClass
 {
-    public interface IConnection
+    public interface IConnectionService
     {
        string Connections(string ConnectionString);
     }

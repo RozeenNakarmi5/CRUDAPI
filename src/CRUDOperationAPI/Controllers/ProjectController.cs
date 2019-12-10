@@ -13,8 +13,8 @@ namespace CRUDOperationAPI.Controllers
     [Route("api/[controller]")]
     public class ProjectController : Controller
     {
-        private IProject _project;
-        public ProjectController(IProject project)
+        private IProjectService _project;
+        public ProjectController(IProjectService project)
         {
             _project = project;
         }

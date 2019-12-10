@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace CRUDOperationAPI
 {
-    public interface IEmployee
+    public interface IEmployeeService
     {
-        List<EmployeeContacts> GetAll();
-        EmployeeContacts GetEmployeeByID(int id);
-        int DeleteEmployee(int id);
-        void PostEmployee(EmployeeContacts emp);
-        void PutEmployee(EmployeeContacts emp);
+        List<EmployeeContactsRole> GetAll();
+        EmployeeContactsRole GetEmployeeByID(int id);
+        int RemoveEmployee(int id);
+        void PostEmployee(EmployeeContactsRole emp);
+        void PutEmployee(EmployeeContactsRole emp);
         int CountEmployee();
         List<EmployeeProjectViewModel> GetEmployeeWithProject();
         void AssignProjectToEmployee(EmployeeProjectViewModel empPro);

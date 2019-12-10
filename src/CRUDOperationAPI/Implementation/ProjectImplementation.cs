@@ -12,7 +12,7 @@ using Dapper;
 
 namespace CRUDOperationAPI.Implementation
 {
-    public class ProjectImplementation : IConnection, IProject
+    public class ProjectImplementation : IConnectionService, IProjectService
     {
         private string _connectionString;
         public ProjectImplementation(IOptions<ConnectionConfig> connectionConfig)

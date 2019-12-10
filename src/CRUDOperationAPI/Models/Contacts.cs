@@ -22,6 +22,7 @@ namespace CRUDOperationAPI.Models
         public string ContactNumber { get; set; }
         [Required(ErrorMessage = "Please enter emergency contact number of the employee")]
         public string EmergencyContactNumber { get; set; }
+        public string ProfilePicture { get; set; }
         public DateTime CreatedTimeStamp { get; set; }
         public DateTime ModifiedTimeStamp { get; set; }
     }

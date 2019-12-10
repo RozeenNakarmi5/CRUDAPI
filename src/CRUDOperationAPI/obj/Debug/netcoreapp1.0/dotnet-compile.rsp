@@ -198,10 +198,10 @@ D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Controllers\ValuesController
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Implementation\ClientImplementation.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Implementation\EmployeeImplementation.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Implementation\ProjectImplementation.cs
-D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\InterfaceClass\IClient.cs
-D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\InterfaceClass\IConnection.cs
-D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\InterfaceClass\IEmployee.cs
-D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\InterfaceClass\IProject.cs
+D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\InterfaceClass\IClientService.cs
+D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\InterfaceClass\IConnectionService.cs
+D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\InterfaceClass\IEmployeeService.cs
+D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\InterfaceClass\IProjectService.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191119081424_InitialUpdate.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191119081424_InitialUpdate.Designer.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191122040723_InitialDatabase.cs
@@ -214,6 +214,8 @@ D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191203091148_Up
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191203091148_Updated projects table.Designer.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191205091806_Update Database with new model.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191205091806_Update Database with new model.Designer.cs
+D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191206063853_Updated ContactDatabase.cs
+D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Migrations\20191206063853_Updated ContactDatabase.Designer.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Models\ClientProject.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Models\Clients.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Models\Company.cs
@@ -229,5 +231,5 @@ D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Models\Projects.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Models\Roles.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Models\Users.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\ClientProjectViewModel.cs
-D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\EmployeeContacts.cs
+D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\EmployeeContactsRole.cs
 D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\EmployeeProjectViewModel.cs
