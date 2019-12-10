@@ -14,7 +14,7 @@ using CRUDOperationAPI.Contexts;
 
 namespace CRUDOperationAPI.Implementation
 {
-    public class ClientImplementation : IConnection, IClient
+    public class ClientImplementation : IConnectionService, IClientService
     {
         private string _connectionString;
         private EmployeeDbContext _db;

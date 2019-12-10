@@ -22,9 +22,9 @@ namespace CRUDOperationAPI.Controllers
     public class EmployeeController : Controller
     {
         
-        private IEmployee _employee;
+        private IEmployeeService _employee;
 
-        public EmployeeController(IEmployee employee)
+        public EmployeeController(IEmployeeService employee)
         {
             _employee = employee;
         //    //_context = context;
@@ -36,7 +36,7 @@ namespace CRUDOperationAPI.Controllers
         }
             // GET: api/values
         [HttpGet]
-        public IEnumerable<EmployeeContacts> Get()
+        public IEnumerable<EmployeeContactsRole> Get()
         {
             //return _context.Employees;
             //using (SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=EmployeeDb;Trusted_Connection=True;MultipleActiveResultSets=true"))
@@ -74,7 +74,7 @@ namespace CRUDOperationAPI.Controllers
         // POST api/values
 
         [HttpPost]
-        public async Task<IActionResult> PostEmployees([FromBody] EmployeeContacts employees)
+        public async Task<IActionResult> PostEmployees([FromBody] EmployeeContactsRole employees)
         {
             if (!ModelState.IsValid)
             {
@@ -83,12 +83,12 @@ namespace CRUDOperationAPI.Controllers
 
             _employee.PostEmployee(employees);
 
-            return CreatedAtAction("GetEmplooyes", new { id = employees.EmployeeID }, employees);
+            return CreatedAtAction("Get", employees);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployees([FromRoute] int id, [FromBody] EmployeeContacts employees)
+        public async Task<IActionResult> PutEmployees([FromRoute] int id, [FromBody] EmployeeContactsRole employees)
         {
             if (!ModelState.IsValid)
             {
@@ -115,7 +115,7 @@ namespace CRUDOperationAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var employees = _employee.DeleteEmployee(id);
+            var employees = _employee.RemoveEmployee(id);
             //var employees = _context.Employees.FirstOrDefault(e => e.EmployeeId == id);
             if (employees == 0)
             {
