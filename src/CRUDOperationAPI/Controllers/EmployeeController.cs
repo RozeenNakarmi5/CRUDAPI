@@ -36,7 +36,7 @@ namespace CRUDOperationAPI.Controllers
         }
             // GET: api/values
         [HttpGet]
-        public IEnumerable<EmployeeContactsRole> Get()
+        public IEnumerable<EmployeeContactsRole> GetWorkingEmployee()
         {
             //return _context.Employees;
             //using (SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=EmployeeDb;Trusted_Connection=True;MultipleActiveResultSets=true"))
@@ -44,10 +44,18 @@ namespace CRUDOperationAPI.Controllers
             //    var eventName = connection.QueryFirst<Employee>("SELECT * FROM Employees");
             //    yield return eventName;
             //}
-            var getAllEmployee =  _employee.GetAll();
+            var getAllEmployee =  _employee.GetWorkingEmployee();
             return getAllEmployee;
 
         }
+        [Route("GetNotWorkingEmployee")]
+        [HttpGet]
+        public IEnumerable<EmployeeContactsRole> GetNotWorkingEmployee()
+        {
+            var getAllEmployee = _employee.GetNotWorkingEmployee();
+            return getAllEmployee;
+        }
+
 
         //GET api/values/5
         [HttpGet("{id}")]
@@ -95,7 +103,7 @@ namespace CRUDOperationAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != employees.ContactID)
+            if (id != employees.EmployeeID)
             {
                 return BadRequest();
             }
@@ -134,6 +142,91 @@ namespace CRUDOperationAPI.Controllers
             var countEmployee = _employee.CountEmployee();
             return Ok(countEmployee);
         }
-        
-     }
+        [Route("AddUsers/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateUsers([FromRoute] int id, [FromBody] UsersDetail employees)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != employees.EmployeeId)
+            {
+                return BadRequest();
+            }
+            _employee.AddUsers(employees);
+            return Ok();
+        }
+        [Route("UpdateRole/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateRole([FromRoute] int id, [FromBody] UpdateRole roles)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != roles.EmployeeId)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _employee.UpdateRoleOfEmployee(roles);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Ok();
+
+        }
+        [Route("UpdateDepartment/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateDeparmtnet([FromRoute] int id, [FromBody] EmployeeDepartmentViewModel departments)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != departments.EmployeeId)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _employee.UpdateEmployeeDepartment(departments);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [Route("UpdateContact/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateContact([FromRoute] int id, [FromBody] EmployeeContactsRole contacts)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != contacts.ContactID)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _employee.UpdateContact(contacts);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
+}

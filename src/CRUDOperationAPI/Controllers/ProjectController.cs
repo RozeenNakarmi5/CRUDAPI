@@ -20,7 +20,7 @@ namespace CRUDOperationAPI.Controllers
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<ClientProjectViewModel> Get()
+        public IEnumerable<ProjectViewModel> Get()
         {
             var getAllProject = _project.GetAll();
             return getAllProject;
@@ -44,7 +44,7 @@ namespace CRUDOperationAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> PostProjects([FromBody]ClientProjectViewModel projects)
+        public async Task<IActionResult> PostProjects([FromBody]ProjectViewModel projects)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace CRUDOperationAPI.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProjects(int id, [FromBody]ClientProjectViewModel projects)
+        public async Task<IActionResult> PutProjects(int id, [FromBody]ProjectViewModel projects)
         {
             if (!ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace CRUDOperationAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var projects = _project.DeleteProject(id);
+            var projects = _project.DisableProject(id);
             if (projects == 0)
             {
                 return NotFound();

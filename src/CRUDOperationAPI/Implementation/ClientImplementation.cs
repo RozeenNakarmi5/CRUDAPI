@@ -138,20 +138,47 @@ namespace CRUDOperationAPI.Implementation
                     }
                     _db.SaveChanges();
                 }
-                else
-                {
-                    message = "Cant enter data";
-                }
-               
-                
-                
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+        public void AssignProjectToClient(ClientProjectViewModel assignProject)
+        {
+            //var getClient = (from user in _db.Clients
+            //                 join clientproject in _db.ClientProject on user.ClientID equals clientproject.ClientID
 
+            //                 where user.ClientID == assignProject.ClientID
+            //                 select user.ClientID).FirstOrDefault();
+           
+
+           
+                foreach (var x in assignProject.ProjectID)
+                {
+                //var getProjectID = (from project in _db.Projects
+                //                    join clientproject in _db.ClientProject on project.ProjectID equals clientproject.ProjectID
+                //                    where project.ProjectID == x
+                //                    select project.ProjectID).FirstOrDefault();
+               var getClientProject = (from clientproject in _db.ClientProject
+                                       //join client in _db.Clients on clientproject.ClientID equals client.ClientID
+                                       //join project in _db.Projects on clientproject.ProjectID equals project.ProjectID
+                                       where clientproject.ClientID == assignProject.ClientID && clientproject.ProjectID == x
+                                       select clientproject).Any();
+                    if (getClientProject == false)
+                    {
+                        var projectAssign = new ClientProject
+                        {
+                            ClientID = assignProject.ClientID,
+                            ProjectID = x
+                        };
+                        _db.ClientProject.Add(projectAssign);
+                    }
+                _db.SaveChanges();
+            }
+
+
+        }
         public void PutClient(ClientProjectViewModel client)
         {
             try
@@ -182,10 +209,8 @@ namespace CRUDOperationAPI.Implementation
                 parameter.Add("@ClientProjectID", client.ClientProjectID);
                 parameter.Add("@ProjectID", client.ProjectID);
                 db.Execute("UpdateClientProject", parameter, commandType: CommandType.StoredProcedure);
-
             }
         }
-
         public List<ClientProjectViewModel> GetALL()
         {
             var data = new List<ClientProjectViewModel>();
@@ -195,5 +220,7 @@ namespace CRUDOperationAPI.Implementation
             }
             return data;
         }
+
+        
     }
 }

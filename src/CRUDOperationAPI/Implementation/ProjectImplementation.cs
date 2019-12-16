@@ -9,23 +9,29 @@ using Microsoft.Extensions.Options;
 using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+using CRUDOperationAPI.Contexts;
 
 namespace CRUDOperationAPI.Implementation
 {
     public class ProjectImplementation : IConnectionService, IProjectService
     {
         private string _connectionString;
-        public ProjectImplementation(IOptions<ConnectionConfig> connectionConfig)
+        private readonly EmployeeDbContext _db;
+
+        public ProjectImplementation(IOptions<ConnectionConfig> connectionConfig, EmployeeDbContext db)
         {
             var connection = connectionConfig.Value;
             string connectionString = connection.myconn;
             _connectionString = Connections(connectionString);
+            _db = db;
         }
+
+       
+
         public string Connections(string ConnectionString)
         {
             return ConnectionString;
         }
-
         public int CountProject()
         {
             int exe;
@@ -35,48 +41,65 @@ namespace CRUDOperationAPI.Implementation
             }
             return exe;
         }
-
-        public int DeleteProject(int id)
+        public int DisableProject(int id)
         {
-            try
+            //try
+            //{
+            //    int exe;
+            //    //var data = new Employee();
+            //    using (IDbConnection db = new SqlConnection(_connectionString))
+            //    {
+            //        string data = "Delete from Projects where ProjectID = @ProjectID";
+            //        exe = db.Execute(data, new
+            //        {
+            //            ProjectID = id
+            //        });
+            //    }
+            //    return exe;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+            var projectDetail = (from project in _db.Projects
+                                 where project.ProjectID == id
+                                 select project).FirstOrDefault();
+            projectDetail.IsActive = false;
+            _db.Projects.Update(projectDetail);
+            var unassignEmployee = (from emp in _db.EmployeeProject
+                                    where emp.ProjectID == id
+                                    select emp).ToList();
+            foreach(var x in unassignEmployee)
             {
-                int exe;
-                //var data = new Employee();
-                using (IDbConnection db = new SqlConnection(_connectionString))
-                {
-                    string data = "Delete from Projects where ProjectID = @ProjectID";
-                    exe = db.Execute(data, new
-                    {
-                        ProjectID = id
-                    });
-                }
-                return exe;
+                _db.EmployeeProject.Remove(x);
             }
-            catch (Exception ex)
+            var unassignClients = (from clients in _db.ClientProject
+                                   where clients.ProjectID == id
+                                   select clients).ToList();
+            foreach(var y in unassignClients)
             {
-                throw ex;
+                _db.ClientProject.Remove(y);
             }
+            return _db.SaveChanges();
         }
-
-        public List<ClientProjectViewModel> GetAll()
+        public List<ProjectViewModel> GetAll()
         {
-            var data = new List<ClientProjectViewModel>();
+            var data = new List<ProjectViewModel>();
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                data = db.Query<ClientProjectViewModel>("Select * from Projects").ToList();
+                data = db.Query<ProjectViewModel>("Select * from Projects").ToList();
             }
             return data;
         }
-
-        public ClientProjectViewModel GetProjectByID(int id)
+        public ProjectViewModel GetProjectByID(int id)
         {
             try
             {
-                ClientProjectViewModel data;
+                ProjectViewModel data;
 
                 using (IDbConnection db = new SqlConnection(_connectionString))
                 {
-                    data = db.Query<ClientProjectViewModel>("SELECT * from Projects where ProjectID = @ProjectID", new { ProjectID = id }).SingleOrDefault();
+                    data = db.Query<ProjectViewModel>("SELECT * from Projects where ProjectID = @ProjectID", new { ProjectID = id }).SingleOrDefault();
                 }
                 return data;
             }
@@ -85,20 +108,20 @@ namespace CRUDOperationAPI.Implementation
                 throw ex;
             }
         }
-
-        public void  PostProject(ClientProjectViewModel client)
+        public void  PostProject(ProjectViewModel project)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 try
                 {
                     var parameter = new DynamicParameters();
-                     parameter.Add("@ProjectName", client.ProjectName);
-                     parameter.Add("@ProjectStartDate", Convert.ToDateTime(client.ProjectStartDate));
-                     parameter.Add("@ProjectEndDate", Convert.ToDateTime(client.ProjectEndDate));
-                     db.Execute("InsertIntoProject", parameter, commandType: CommandType.StoredProcedure);
-
-
+                    parameter.Add("@ProjectName", project.ProjectName);
+                    parameter.Add("@ProjectDescription", project.ProjectDescription); 
+                    parameter.Add("@ProjectStartDate", project.ProjectStartDate);
+                    parameter.Add("@ProjectEndDate", project.ProjectEndDate);
+                    parameter.Add("@IsActive", project.IsActive);
+                    parameter.Add("@CreatedTimeStamp", project.CreatedTimeStamp);
+                    db.Execute("InsertIntoProject", parameter, commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)
                 {
@@ -106,27 +129,27 @@ namespace CRUDOperationAPI.Implementation
                 }
             }
         }
-
-        public void PutProject(ClientProjectViewModel client)
+        public void PutProject(ProjectViewModel project)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
                 try
                 {
                     var parameter = new DynamicParameters();
-                    parameter.Add("@ProjectID", client.ProjectID);
-                    parameter.Add("@ProjectName", client.ProjectName);
-                    parameter.Add("@ProjectStartDate", client.ProjectStartDate);
-                    parameter.Add("@ProjectEndDate", client.ProjectEndDate);
+                    parameter.Add("@ProjectID", project.ProjectID);
+                    parameter.Add("@ProjectName", project.ProjectName);
+                    parameter.Add("@projectDescription", project.ProjectDescription);
+                    parameter.Add("@ProjectStartDate", project.ProjectStartDate);
+                    parameter.Add("@ProjectEndDate", project.ProjectEndDate);
+                    parameter.Add("@ModifiedTimeStamp", project.ModifiedTimeStamp);
                     db.Execute("UpdateProject", parameter, commandType: CommandType.StoredProcedure);
-
-
-                }
+                      }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
             }
         }
+        
     }
 }

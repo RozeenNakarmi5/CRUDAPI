@@ -228,4 +228,8 @@
 "D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\Models\Users.cs"
 "D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\ClientProjectViewModel.cs"
 "D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\EmployeeContactsRole.cs"
+"D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\EmployeeDepartmentViewModel.cs"
 "D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\EmployeeProjectViewModel.cs"
+"D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\ProjectViewModel.cs"
+"D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\UpdateRole.cs"
+"D:\Assignment\CRUDOperationAPI\src\CRUDOperationAPI\ViewModels\UsersDetail.cs"

@@ -9,7 +9,8 @@ namespace CRUDOperationAPI
 {
     public interface IEmployeeService
     {
-        List<EmployeeContactsRole> GetAll();
+        List<EmployeeContactsRole> GetWorkingEmployee();
+        List<EmployeeContactsRole> GetNotWorkingEmployee();
         EmployeeContactsRole GetEmployeeByID(int id);
         int RemoveEmployee(int id);
         void PostEmployee(EmployeeContactsRole emp);
@@ -19,6 +20,11 @@ namespace CRUDOperationAPI
         void AssignProjectToEmployee(EmployeeProjectViewModel empPro);
         void UpdateProjectToEmployee(EmployeeProjectViewModel empPro);
         int DeleteEmployeeAndProject(int id);
+        void AddUsers(UsersDetail users);
+        void UpdateRoleOfEmployee(UpdateRole updateRoles);
+        void UpdateEmployeeDepartment(EmployeeDepartmentViewModel empDep);
+        void UpdateContact(EmployeeContactsRole con);
+
 
     }
 }

@@ -34,6 +34,7 @@ namespace CRUDOperationAPI.ViewModels
         {
             CreatedTimeStamp = DateTime.Now;
             ModifiedTimeStamp = DateTime.Now;
+            IsWorking = true;
         }
     }
 }

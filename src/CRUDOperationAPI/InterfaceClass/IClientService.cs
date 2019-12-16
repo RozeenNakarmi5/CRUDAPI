@@ -17,5 +17,7 @@ namespace CRUDOperationAPI.InterfaceClass
         int CountClient();
         List<ClientProjectViewModel> GetALL();
         void UpdateClientProject(ClientProjectViewModel client);
+        void AssignProjectToClient(ClientProjectViewModel assignProject);
+
     }
 }

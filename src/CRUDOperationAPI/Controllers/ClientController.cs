@@ -109,10 +109,23 @@ namespace CRUDOperationAPI.Controllers
             return Ok(clients);
         }
         [Route("ClientCount")]
+        [HttpGet]
         public IActionResult ProjectCount()
         {
             var countClient = _client.CountClient();
             return Ok(countClient);
         }
+        [Route("AssignProjectToClient")]
+        [HttpPost]
+        public async Task<IActionResult> AssignProjectToClient([FromBody]ClientProjectViewModel clients)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _client.AssignProjectToClient(clients);
+            return Ok();
+        }
+
     }
 }
