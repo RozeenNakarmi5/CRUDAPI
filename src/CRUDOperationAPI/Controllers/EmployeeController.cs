@@ -84,14 +84,22 @@ namespace CRUDOperationAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PostEmployees([FromBody] EmployeeContactsRole employees)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                _employee.PostEmployee(employees);
+
+                return Ok();
             }
-
-            _employee.PostEmployee(employees);
-
-            return CreatedAtAction("Get", employees);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         // PUT api/values/5
