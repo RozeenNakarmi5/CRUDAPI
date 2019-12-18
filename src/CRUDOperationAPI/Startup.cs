@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using CRUDOperationAPI.Connections;
 using CRUDOperationAPI.Implementation;
 using CRUDOperationAPI.InterfaceClass;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using CRUDOperationAPI.Models;
 
 namespace CRUDOperationAPI
 {
@@ -44,13 +47,17 @@ namespace CRUDOperationAPI
 
             services.AddMvc();
             services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
+            services.Configure<TokenAuthentication>(Configuration.GetSection("TokenAuthentication"));
 
             services.AddDbContext<EmployeeDbContext>(item =>
             item.UseSqlServer(Configuration.GetConnectionString("myconn")));
             services.AddCors();
+            services.AddScoped<ILoginServices, UserServiceImplementation>();
             services.AddScoped<IEmployeeService, EmployeeImplementation>();
             services.AddScoped<IClientService, ClientImplementation>();
             services.AddScoped<IProjectService, ProjectImplementation>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -62,9 +69,30 @@ namespace CRUDOperationAPI
             app.UseApplicationInsightsRequestTelemetry();
             app.UseDeveloperExceptionPage();
             app.UseApplicationInsightsExceptionTelemetry();
+            
             app.UseCors(
                option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
             );
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("TokenAuthentication:SecretKey").Value));
+            var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions()
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+
+                TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = Configuration.GetSection("TokenAuthentication:Issuer").Value,
+                    ValidAudience = Configuration.GetSection("TokenAuthentication:Audience").Value,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ValidateLifetime = true
+                }
+
+            });
+
             app.UseMvc();
         }
     }

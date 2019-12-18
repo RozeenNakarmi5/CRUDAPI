@@ -17,5 +17,6 @@ namespace CRUDOperationAPI.Models
 
         [ForeignKey("RoleID")]
         public virtual Roles Roles { get; set; }
+        
     }
 }

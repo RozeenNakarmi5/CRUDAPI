@@ -13,11 +13,13 @@ using Microsoft.Extensions.Options;
 using CRUDOperationAPI.Connections;
 using CRUDOperationAPI.Implementation;
 using CRUDOperationAPI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CRUDOperationAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class EmployeeController : Controller
     {
