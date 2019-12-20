@@ -1,4 +1,5 @@
 ﻿using CRUDOperationAPI.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CRUDOperationAPI.Contexts
 {
-    public class EmployeeDbContext : DbContext
+    public class EmployeeDbContext : IdentityDbContext
     {
         public EmployeeDbContext(DbContextOptions<EmployeeDbContext> options)
             : base(options)
@@ -25,14 +26,13 @@ namespace CRUDOperationAPI.Contexts
         public DbSet<Company> Companies { get; set; }
         public DbSet<Departments> Departments { get; set; }
         public DbSet<DepartmentEmployee> DepartmentEmployee { get; set; }
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Roles> Roles { get; set; }
+        public  DbSet<Users> Users { get; set; }
+        public  DbSet<Roles> Roles { get; set; }
         public DbSet<Leaves> Leaves { get; set; }
 
-
-
-
-
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
