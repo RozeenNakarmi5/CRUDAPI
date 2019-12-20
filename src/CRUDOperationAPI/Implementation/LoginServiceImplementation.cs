@@ -64,10 +64,7 @@ namespace CRUDOperationAPI.Implementation
                 //    expiration = jwtSecurityToken.ValidTo
                 //});
 
-                if (Login.RoleID == 1)
-                {
-                    claims.Add(new Claim ("isAdmin", "1"));
-                };
+                
 
                 JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
                 var tokenString = tokenHandler.WriteToken(jwtSecurityToken);

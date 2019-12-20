@@ -37,9 +37,20 @@ namespace CRUDOperationAPI.Implementation
             int exe;
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                exe = db.Query<int>("Select Count(Distinct(ProjectID)) from Projects").FirstOrDefault();
+                exe = db.Query<int>("Select Count(Distinct(ProjectID)) from Projects where Projects.IsActive = 1").FirstOrDefault();
             }
             return exe;
+        }
+
+        public int EnableProject(int id)
+        {
+            var projectDetail = (from project in _db.Projects
+                                 where project.ProjectID == id
+                                 select project).FirstOrDefault();
+            projectDetail.IsActive = true;
+            _db.Projects.Update(projectDetail);
+            
+            return _db.SaveChanges();
         }
         public int DisableProject(int id)
         {
@@ -82,15 +93,27 @@ namespace CRUDOperationAPI.Implementation
             }
             return _db.SaveChanges();
         }
-        public List<ProjectViewModel> GetAll()
+        
+
+        public List<ProjectViewModel> GetNow()
         {
             var data = new List<ProjectViewModel>();
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                data = db.Query<ProjectViewModel>("Select * from Projects").ToList();
+                data = db.Query<ProjectViewModel>("Select * from Projects where Projects.IsActive = 1").ToList();
             }
             return data;
         }
+        public List<ProjectViewModel> GetScrap()
+        {
+            var data = new List<ProjectViewModel>();
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                data = db.Query<ProjectViewModel>("Select * from Projects where Projects.IsActive = 0").ToList();
+            }
+            return data;
+        }
+
         public ProjectViewModel GetProjectByID(int id)
         {
             try
@@ -108,6 +131,9 @@ namespace CRUDOperationAPI.Implementation
                 throw ex;
             }
         }
+
+       
+
         public void  PostProject(ProjectViewModel project)
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
@@ -119,7 +145,7 @@ namespace CRUDOperationAPI.Implementation
                     parameter.Add("@ProjectDescription", project.ProjectDescription); 
                     parameter.Add("@ProjectStartDate", project.ProjectStartDate);
                     parameter.Add("@ProjectEndDate", project.ProjectEndDate);
-                    parameter.Add("@IsActive", project.IsActive);
+                    parameter.Add("True", project.IsActive);
                     parameter.Add("@CreatedTimeStamp", project.CreatedTimeStamp);
                     db.Execute("InsertIntoProject", parameter, commandType: CommandType.StoredProcedure);
                 }
