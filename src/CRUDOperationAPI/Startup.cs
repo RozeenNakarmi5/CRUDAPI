@@ -51,6 +51,7 @@ namespace CRUDOperationAPI
             services.AddScoped<IEmployeeService, EmployeeImplementation>();
             services.AddScoped<IClientService, ClientImplementation>();
             services.AddScoped<IProjectService, ProjectImplementation>();
+            services.AddScoped<IDepartmentService, DepartmentImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

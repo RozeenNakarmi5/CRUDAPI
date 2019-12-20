@@ -98,13 +98,14 @@ namespace CRUDOperationAPI.Implementation
                 employeeDetail.IsWorking = false;
                 _db.Employees.Update(employeeDetail);
             
-                    var userDetail = (from users in _db.Users
+                var userDetail = (from users in _db.Users
                                       where users.UserID == employeeDetail.UserID
                                       select users).FirstOrDefault();
                 if (userDetail != null && employeeDetail.IsWorking == false)
                 {
                     _db.Users.Remove(userDetail);
                 }
+                
             }
 
             return _db.SaveChanges();
@@ -118,25 +119,31 @@ namespace CRUDOperationAPI.Implementation
             {
                 try
                 {
-                    var parameter = new DynamicParameters();
-                    parameter.Add("@FirstName", emp.FirstName);
-                    parameter.Add("@LastName", emp.LastName);
-                    parameter.Add("@Address", emp.Address);
-                    parameter.Add("@Email", emp.Email);
-                    parameter.Add("@ContactNumber", emp.ContactNumber);
-                    parameter.Add("@EmergyContactNumber", emp.EmergencyContactNumber);
-                    parameter.Add("@ProfilePicture", emp.ProfilePicture);
-                    parameter.Add("@Designation", emp.Designation);
-                    parameter.Add("@Salary", emp.Salary);
-                    parameter.Add("@IsFullTimer", emp.IsFullTimer);
-                    parameter.Add("@IsWorking", emp.IsWorking);
-                    parameter.Add("@UserName", emp.UserName);
-                    parameter.Add("@Password", emp.Password);
-                    parameter.Add("@RoleID", emp.RoleID);
-                    parameter.Add("@DepartmentID", emp.DepartmentID);
-                    parameter.Add("@CreatedTimeStamp", emp.CreatedTimeStamp);
+                    if(emp.FirstName != null && emp.LastName != null && emp.Address != null && emp.Email != null && emp.ContactNumber != null && emp.EmergencyContactNumber != null &&
+                        emp.ProfilePicture != null && emp.Designation != null && emp.Salary != null && emp.UserName != null && emp.IsFullTimer !=null && emp.Password != null &&
+                         emp.RoleID != null)
+                    {
+                        var parameter = new DynamicParameters();
+                        parameter.Add("@FirstName", emp.FirstName);
+                        parameter.Add("@LastName", emp.LastName);
+                        parameter.Add("@Address", emp.Address);
+                        parameter.Add("@Email", emp.Email);
+                        parameter.Add("@ContactNumber", emp.ContactNumber);
+                        parameter.Add("@EmergyContactNumber", emp.EmergencyContactNumber);
+                        parameter.Add("@ProfilePicture", emp.ProfilePicture);
+                        parameter.Add("@Designation", emp.Designation);
+                        parameter.Add("@Salary", emp.Salary);
+                        parameter.Add("@IsFullTimer", emp.IsFullTimer);
+                        parameter.Add("@IsWorking", emp.IsWorking);
+                        parameter.Add("@UserName", emp.UserName);
+                        parameter.Add("@Password", emp.Password);
+                        parameter.Add("@RoleID", emp.RoleID);
+                        parameter.Add("@DepartmentID", emp.DepartmentID);
+                        parameter.Add("@CreatedTimeStamp", emp.CreatedTimeStamp);
 
-                    db.Execute("InsertIntoContactsAndEmployee", parameter, commandType: CommandType.StoredProcedure);
+                        db.Execute("InsertIntoContactsAndEmployee", parameter, commandType: CommandType.StoredProcedure);
+                    }
+                    
                    
                 }
                 catch (Exception ex)
@@ -196,23 +203,36 @@ namespace CRUDOperationAPI.Implementation
 
         public void AssignProjectToEmployee(EmployeeProjectViewModel empPro)
         {
-            try
+            foreach (var x in empPro.ProjectID)
             {
-                using (IDbConnection db = new SqlConnection(_connectionString))
-                {
-                    var parameter = new DynamicParameters();
-                    parameter.Add("@EmployeeID", empPro.EmployeeID);
-                    parameter.Add("@ProjectID", empPro.ProjectID);
-                    db.Execute("AssignProjectToEmployee", parameter, commandType: CommandType.StoredProcedure);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            
-        }
 
+                var getEmployeeProject = (from empPrj in _db.EmployeeProject
+                                              //join client in _db.Clients on clientproject.ClientID equals client.ClientID
+                                              //join project in _db.Projects on clientproject.ProjectID equals project.ProjectID
+                                          where empPrj.EmployeeID == empPro.EmployeeID && empPrj.ProjectID == x
+                                          select empPrj).Any();
+                var workingEmployee = (from emp in _db.Employees
+                                       where emp.EmployeeId == empPro.EmployeeID
+                                       where emp.IsWorking == true
+                                       select emp).Any();
+
+                if (getEmployeeProject == false)
+                {
+                    if (workingEmployee == true)
+                    {
+                        var projectAssign = new EmployeeProject
+                        {
+                            EmployeeID = empPro.EmployeeID,
+                            ProjectID = x
+                        };
+                        _db.EmployeeProject.Add(projectAssign);
+                    }
+                    
+                }
+                _db.SaveChanges();
+
+            }
+        } 
         public void UpdateProjectToEmployee(EmployeeProjectViewModel empPro)
         {
             try
@@ -312,8 +332,21 @@ namespace CRUDOperationAPI.Implementation
             var selectEmployee = (from dept in _db.DepartmentEmployee
                                   where dept.EmployeeID == empDep.EmployeeId
                                   select dept).FirstOrDefault();
-            selectEmployee.DepartmentID = empDep.DepartmentID;
-            _db.DepartmentEmployee.Update(selectEmployee);
+            
+            if (selectEmployee == null)
+            {
+                var assignDepartmentToEmployee = new DepartmentEmployee
+                {
+                    EmployeeID = empDep.EmployeeId,
+                    DepartmentID = empDep.DepartmentID
+                };
+                _db.DepartmentEmployee.Add(assignDepartmentToEmployee);
+            }
+            else
+            {
+                selectEmployee.DepartmentID = empDep.DepartmentID;
+                _db.DepartmentEmployee.Update(selectEmployee);
+            }
             _db.SaveChanges();
         }
 

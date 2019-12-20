@@ -126,12 +126,13 @@ namespace CRUDOperationAPI.Implementation
                         OfficeAddress = client.OfficeAddress
                     };
                     _db.Clients.Add(clientDetail);
-                    _db.SaveChanges();
+                    //_db.SaveChanges();
                     foreach (var x in client.ProjectID)
                     {
                         var clientProject = new ClientProject
                         {
-                            ClientID = clientDetail.ClientID,
+                            //ClientID = clientDetail.ClientID,
+                            Clients=clientDetail,
                             ProjectID = x
                         };
                         _db.ClientProject.Add(clientProject);

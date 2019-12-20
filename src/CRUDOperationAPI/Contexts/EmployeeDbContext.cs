@@ -11,7 +11,7 @@ namespace CRUDOperationAPI.Contexts
     public class EmployeeDbContext : DbContext
     {
         public EmployeeDbContext(DbContextOptions<EmployeeDbContext> options)
-            : base(options)
+            :base(options)
         {
 
         }

@@ -73,7 +73,7 @@ namespace CRUDOperationAPI.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProjects(int id)
+        public IActionResult DeleteProjects(int id)
         {
             if (!ModelState.IsValid)
             {

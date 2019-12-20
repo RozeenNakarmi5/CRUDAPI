@@ -17,5 +17,10 @@ namespace CRUDOperationAPI.Models
         [ForeignKey("CompanyID")]
         public virtual Company Company { get; set; }
 
+        public Departments()
+        {
+            CompanyID = 1;   
+        }
+
     }
 }

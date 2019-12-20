@@ -192,7 +192,7 @@ namespace CRUDOperationAPI.Controllers
         }
         [Route("UpdateDepartment/{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateDeparmtnet([FromRoute] int id, [FromBody] EmployeeDepartmentViewModel departments)
+        public async Task<IActionResult> UpdateDepartment([FromRoute] int id, [FromBody] EmployeeDepartmentViewModel departments)
         {
             if (!ModelState.IsValid)
             {
@@ -236,5 +236,17 @@ namespace CRUDOperationAPI.Controllers
                 throw ex;
             }
         }
+        [Route("AssignProjectToEmployee")]
+        [HttpPost]
+        public IActionResult AssignProjectToEmployee([FromBody]EmployeeProjectViewModel employee)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _employee.AssignProjectToEmployee(employee);
+            return Ok();
+        }
     }
+    
 }
