@@ -45,19 +45,21 @@ namespace CRUDOperationAPI
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddMvc();
+            
             services.Configure<ConnectionConfig>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<TokenAuthentication>(Configuration.GetSection("TokenAuthentication"));
 
             services.AddDbContext<EmployeeDbContext>(item =>
             item.UseSqlServer(Configuration.GetConnectionString("myconn")));
+
             services.AddCors();
+
             services.AddScoped<ILoginServices, UserServiceImplementation>();
             services.AddScoped<IEmployeeService, EmployeeImplementation>();
             services.AddScoped<IClientService, ClientImplementation>();
             services.AddScoped<IProjectService, ProjectImplementation>();
 
-
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

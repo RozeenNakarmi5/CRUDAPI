@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CRUDOperationAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     public class ProjectController : Controller
     {
@@ -22,10 +22,18 @@ namespace CRUDOperationAPI.Controllers
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<ProjectViewModel> Get()
+        public IEnumerable<ProjectViewModel> GetNow()
         {
-            var getAllProject = _project.GetAll();
-            return getAllProject;
+            var getProject = _project.GetNow();
+            return getProject;
+        }
+
+        [Route("GetScrap")]
+        [HttpGet]
+        public IEnumerable<ProjectViewModel> GetScrap()
+        {
+            var getProject = _project.GetScrap();
+            return getProject;
         }
 
         // GET api/values/5
@@ -88,6 +96,23 @@ namespace CRUDOperationAPI.Controllers
             }
             return Ok(projects);
         }
+
+        [Route("GetScrap/{id}")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> RestoreProjects(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var projects = _project.EnableProject(id);
+            if (projects == 0)
+            {
+                return NotFound();
+            }
+            return Ok(projects);
+        }
+
         [Route("ProjectCount")]
         public IActionResult ProjectCount()
         {

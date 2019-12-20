@@ -32,7 +32,7 @@ namespace CRUDOperationAPI.Controllers
             return _login.GenerateToken(Login);
 
         }
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [HttpGet]
         public int number()
         {

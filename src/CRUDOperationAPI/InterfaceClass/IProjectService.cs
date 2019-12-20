@@ -8,9 +8,11 @@ namespace CRUDOperationAPI.InterfaceClass
 {
     public interface IProjectService
     {
-        List<ProjectViewModel> GetAll();
+        List<ProjectViewModel> GetNow();
+        List<ProjectViewModel> GetScrap();
         ProjectViewModel GetProjectByID(int id);
         int DisableProject(int id);
+        int EnableProject(int id);
         void PostProject(ProjectViewModel client);
         void PutProject(ProjectViewModel client);
         int CountProject();
