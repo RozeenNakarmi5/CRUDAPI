@@ -19,6 +19,7 @@ namespace CRUDOperationAPI.Controllers
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
+
         private readonly ILoginServices _login;
 
         public LoginController(ILoginServices login)
@@ -26,13 +27,12 @@ namespace CRUDOperationAPI.Controllers
             _login = login;
         }
         [HttpPost]
-        public string Login([FromBody] Users Login)
+        public IActionResult Login([FromBody] Users Login)
         {
-
-            return _login.GenerateToken(Login);
+            var token = _login.GenerateToken(Login);
+            return Ok(new { token });
 
         }
-        //[Authorize(Policy = "Admin")]
         [HttpGet]
         public int number()
         {

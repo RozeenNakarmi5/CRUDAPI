@@ -36,7 +36,8 @@ namespace CRUDOperationAPI.Controllers
 
 
         }
-            // GET: api/values
+        // GET: api/values
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IEnumerable<EmployeeContactsRole> GetWorkingEmployee()
         {
@@ -82,7 +83,6 @@ namespace CRUDOperationAPI.Controllers
             }
 
         // POST api/values
-
         [HttpPost]
         public async Task<IActionResult> PostEmployees([FromBody] EmployeeContactsRole employees)
         {

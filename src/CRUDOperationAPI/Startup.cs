@@ -15,6 +15,9 @@ using CRUDOperationAPI.InterfaceClass;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CRUDOperationAPI.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net;
 
 namespace CRUDOperationAPI
 {
@@ -58,12 +61,22 @@ namespace CRUDOperationAPI
             services.AddScoped<IEmployeeService, EmployeeImplementation>();
             services.AddScoped<IClientService, ClientImplementation>();
             services.AddScoped<IProjectService, ProjectImplementation>();
-<<<<<<< HEAD
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                // avoid redirecting REST clients on 401
+                options.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        return Task.FromResult(0);
+                    }
+                };
+            });
             services.AddMvc();
-=======
+
             services.AddScoped<IDepartmentService, DepartmentImplementation>();
->>>>>>> remotes/origin/BugFix
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -98,6 +111,12 @@ namespace CRUDOperationAPI
                 }
 
             });
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AutomaticAuthenticate = false,
+                AutomaticChallenge = false
+            });
+
 
             app.UseMvc();
         }

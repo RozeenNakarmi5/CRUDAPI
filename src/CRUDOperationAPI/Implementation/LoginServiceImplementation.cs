@@ -23,6 +23,7 @@ namespace CRUDOperationAPI.Implementation
         private readonly EmployeeDbContext _Context;
         private readonly IOptions<TokenAuthentication> _auth;
 
+
         public UserServiceImplementation(EmployeeDbContext context, IOptions<TokenAuthentication> auth)
         {
             _Context = context;
@@ -39,39 +40,22 @@ namespace CRUDOperationAPI.Implementation
             {
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_auth.Value.SecretKey));
                 var code = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                
-
-                var claims = new Claim[]
+                var tokenDescriptions = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim("UserName", query.UserName),
                         new Claim("Password", query.Password),
-                        new Claim("RoleName", query.RoleName)
-                    };
+                        new Claim(ClaimTypes.Role, query.RoleName)
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(1),
+                    SigningCredentials = code
+                };
 
-                var jwtSecurityToken = new JwtSecurityToken(
-                    
-                        issuer: _auth.Value.Issuer,
-                        audience: _auth.Value.Audience,
-                        expires: DateTime.UtcNow.AddDays(1),
-                        claims: claims,
-                        signingCredentials: code
-                        );
-
-                //return Ok(new
-                //{
-                //    token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-                //    expiration = jwtSecurityToken.ValidTo
-                //});
-
-                
-
-                JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-                var tokenString = tokenHandler.WriteToken(jwtSecurityToken);
-
-                return tokenString;
-
-                //return Ok();
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptions);
+                var tokenString = tokenHandler.WriteToken(securityToken);
+                return tokenString; 
             }
             else
                 return "Username or password is incorrect";
