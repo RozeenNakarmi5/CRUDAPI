@@ -8,9 +8,10 @@ using CRUDOperationAPI.Contexts;
 namespace CRUDOperationAPI.Migrations
 {
     [DbContext(typeof(EmployeeDbContext))]
-    partial class EmployeeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191224083353_Remove")]
+    partial class Remove
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -196,8 +197,6 @@ namespace CRUDOperationAPI.Migrations
                     b.Property<DateTime>("ModifiedTimeStamp");
 
                     b.Property<DateTime?>("OutTime");
-
-                    b.Property<TimeSpan>("TotalHourWorkPerday");
 
                     b.HasKey("ScheduleID");
 

@@ -14,11 +14,16 @@ namespace CRUDOperationAPI.Models
         public virtual int EmployeeID { get; set; }
         public DateTime? InTime { get; set; }
         public DateTime? OutTime { get; set; }
-        public decimal? TotalHourWorkPerday { get; set; }
+        public TimeSpan TotalHourWorkPerday { get; set; }
         public DateTime CreatedTimeStamp { get; set; }
         public DateTime ModifiedTimeStamp { get; set; }
 
         [ForeignKey("EmployeeID")]
         public virtual Employee Employee { get; set; }
+
+        public EmployeeSchedule()
+        {
+            CreatedTimeStamp = DateTime.Now;
+        }
     }
 }

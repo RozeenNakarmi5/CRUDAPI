@@ -8,9 +8,10 @@ using CRUDOperationAPI.Contexts;
 namespace CRUDOperationAPI.Migrations
 {
     [DbContext(typeof(EmployeeDbContext))]
-    partial class EmployeeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191224083513_Added TotalHourWorkPerDay in EmployeeSchedule")]
+    partial class AddedTotalHourWorkPerDayinEmployeeSchedule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

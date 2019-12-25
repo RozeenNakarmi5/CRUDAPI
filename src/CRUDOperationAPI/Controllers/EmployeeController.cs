@@ -37,7 +37,6 @@ namespace CRUDOperationAPI.Controllers
 
         }
         // GET: api/values
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IEnumerable<EmployeeContactsRole> GetWorkingEmployee()
         {
@@ -73,12 +72,6 @@ namespace CRUDOperationAPI.Controllers
             {
                 return NotFound();
             }
-            //    var employees = _context.Employees.FirstOrDefault(e => e.EmployeeId == id);
-            //    if (employees == null)
-            //    {
-            //        return NotFound();
-            //    }
-
                return Ok(employees);
             }
 

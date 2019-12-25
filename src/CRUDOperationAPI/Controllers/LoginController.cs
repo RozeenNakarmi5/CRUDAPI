@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
 using CRUDOperationAPI.InterfaceClass;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,10 +22,13 @@ namespace CRUDOperationAPI.Controllers
     {
 
         private readonly ILoginServices _login;
+        private readonly EmployeeDbContext _database;
 
-        public LoginController(ILoginServices login)
+
+        public LoginController(ILoginServices login, EmployeeDbContext database)
         {
             _login = login;
+            _database = database;
         }
         [HttpPost]
         public IActionResult Login([FromBody] Users Login)
@@ -33,10 +37,21 @@ namespace CRUDOperationAPI.Controllers
             return Ok(new { token });
 
         }
-        [HttpGet]
-        public int number()
+
+        [Authorize]
+        [Route("Logout")]
+        [HttpPut]
+        public void Logout()
         {
-            return 0;
+            try
+            {
+                int UserID = Convert.ToInt32(User.Claims.First(c => c.Type == "UserID").Value);
+                _login.Logout(UserID);
+            }
+            catch
+            {
+                 BadRequest(new { message = "User is not logged in." });
+            }
         }
     }
 }
