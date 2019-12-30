@@ -9,7 +9,7 @@ namespace CRUDOperationAPI.InterfaceClass
 {
     public interface IClientService
     {
-        List<ClientProjectViewModel> GetClientProject();
+        List<ViewClientAndProject> GetClientProject();
         ClientProjectViewModel GetClientByID(int id);
         int DeleteClient(int id);
         void PostClient(ClientProjectViewModel client);
@@ -18,6 +18,7 @@ namespace CRUDOperationAPI.InterfaceClass
         List<ClientProjectViewModel> GetALL();
         void UpdateClientProject(ClientProjectViewModel client);
         void AssignProjectToClient(ClientProjectViewModel assignProject);
+        int DeleteClientProject(int id);
 
     }
 }

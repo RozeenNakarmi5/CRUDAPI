@@ -20,37 +20,18 @@ namespace CRUDOperationAPI.Controllers
         {
             _client = client;
         }
+
+        
         [HttpGet]
         public IEnumerable<ClientProjectViewModel> Get()
         {
             var getAllClient = _client.GetALL();
             return getAllClient;
         }
-        // GET: api/values
-        [Route("ClientProject")]
-        [HttpGet]
-        public IEnumerable<ClientProjectViewModel> GetClientAndProjectDetail()
-        {
-            var getAllClientProject = _client.GetClientProject();
-            return getAllClientProject;
-        }
-        [Route("ClientProject/UpdateClientProject")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClientProject(int id, [FromBody]ClientProjectViewModel clients)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            if (id != clients.ClientProjectID)
-            {
-                return BadRequest();
-            }
-            _client.UpdateClientProject(clients);
-            return Ok();
-        }
 
+        
         // GET api/values/5
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClients(int id)
         {
@@ -80,6 +61,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // PUT api/values/5
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutClients(int id, [FromBody]ClientProjectViewModel clients)
         {
@@ -127,6 +109,46 @@ namespace CRUDOperationAPI.Controllers
             }
             _client.AssignProjectToClient(clients);
             return Ok();
+        }
+
+        // GET: api/values
+        [Route("SetClient")]
+        [HttpGet]
+        public IEnumerable<ViewClientAndProject> GetClientAndProjectDetail()
+        {
+            var getAllClientProject = _client.GetClientProject();
+            return getAllClientProject;
+        }
+
+        [Route("SetClient/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateClientProject(int id, [FromBody]ClientProjectViewModel clients)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id != clients.ClientProjectID)
+            {
+                return BadRequest();
+            }
+            _client.UpdateClientProject(clients);
+            return Ok();
+        }
+        [Route("SetClient/{id}")]
+        [HttpDelete]
+        public async Task <IActionResult> DeleteClientProject(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var clients = _client.DeleteClientProject(id);
+            if (clients == 0)
+            {
+                return NotFound();
+            }
+            return Ok(clients);
         }
 
     }

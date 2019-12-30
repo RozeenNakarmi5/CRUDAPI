@@ -53,6 +53,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // POST api/values
+        [Route("insert")]
         [HttpPost]
         public async Task<IActionResult> PostProjects([FromBody]ProjectViewModel projects)
         {
@@ -66,6 +67,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // PUT api/values/5
+        [Route("Put/{id}")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProjects(int id, [FromBody]ProjectViewModel projects)
         {

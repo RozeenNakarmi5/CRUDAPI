@@ -46,7 +46,7 @@ namespace CRUDOperationAPI.Implementation
                     {
                         new Claim("UserName", query.UserName),
                         new Claim("Password", query.Password),
-                        new Claim("RoleName", query.RoleName)
+                        new Claim("role", query.RoleName)
                     };
 
                 var jwtSecurityToken = new JwtSecurityToken(

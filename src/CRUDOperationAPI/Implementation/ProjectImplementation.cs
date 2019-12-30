@@ -100,7 +100,7 @@ namespace CRUDOperationAPI.Implementation
             var data = new List<ProjectViewModel>();
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                data = db.Query<ProjectViewModel>("Select * from Projects where Projects.IsActive = 1").ToList();
+                data = db.Query<ProjectViewModel>("Select * from Projects where Projects.IsActive = 1 ").ToList();
             }
             return data;
         }
@@ -109,7 +109,7 @@ namespace CRUDOperationAPI.Implementation
             var data = new List<ProjectViewModel>();
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                data = db.Query<ProjectViewModel>("Select * from Projects where Projects.IsActive = 0").ToList();
+                data = db.Query<ProjectViewModel>("Select * from Projects where Projects.IsActive = 0 ").ToList();
             }
             return data;
         }
@@ -141,12 +141,13 @@ namespace CRUDOperationAPI.Implementation
                 try
                 {
                     var parameter = new DynamicParameters();
+                    
                     parameter.Add("@ProjectName", project.ProjectName);
                     parameter.Add("@ProjectDescription", project.ProjectDescription); 
                     parameter.Add("@ProjectStartDate", project.ProjectStartDate);
                     parameter.Add("@ProjectEndDate", project.ProjectEndDate);
-                    parameter.Add("True", project.IsActive);
                     parameter.Add("@CreatedTimeStamp", project.CreatedTimeStamp);
+                    parameter.Add("@IsActive", project.IsActive);
                     db.Execute("InsertIntoProject", parameter, commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception ex)
