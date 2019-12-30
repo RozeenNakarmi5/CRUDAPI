@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CRUDOperationAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     public class ClientController : Controller
     {

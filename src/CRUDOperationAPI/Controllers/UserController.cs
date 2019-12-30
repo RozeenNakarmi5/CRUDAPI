@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace CRUDOperationAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class UserController : Controller
     {

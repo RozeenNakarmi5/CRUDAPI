@@ -242,6 +242,12 @@ namespace CRUDOperationAPI.Controllers
             _employee.AssignProjectToEmployee(employee);
             return Ok();
         }
+        [Route("ExportEmpSchedule")]
+        [HttpPost]
+        public string ExportEmpSchedule()
+        {
+            return _employee.ExportEmployeeSchedule();
+        }
     }
     
 }

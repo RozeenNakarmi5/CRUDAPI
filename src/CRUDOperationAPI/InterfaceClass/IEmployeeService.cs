@@ -24,6 +24,8 @@ namespace CRUDOperationAPI
         void UpdateRoleOfEmployee(UpdateRole updateRoles);
         void UpdateEmployeeDepartment(EmployeeDepartmentViewModel empDep);
         void UpdateContact(EmployeeContactsRole con);
+        string ExportEmployeeSchedule();
+       
 
 
     }

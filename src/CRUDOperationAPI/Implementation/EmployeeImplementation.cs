@@ -11,6 +11,9 @@ using CRUDOperationAPI.InterfaceClass;
 using Microsoft.Extensions.Options;
 using CRUDOperationAPI.Connections;
 using CRUDOperationAPI.Contexts;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using OfficeOpenXml;
 
 namespace CRUDOperationAPI.Implementation
 {
@@ -18,17 +21,20 @@ namespace CRUDOperationAPI.Implementation
     {
         private string _connectionString;
         private readonly EmployeeDbContext _db;
+        private readonly IHostingEnvironment _hostingEnvironment;
         
 
         //private IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["myconn"].ConnectionString);
 
-        public EmployeeImplementation(IOptions<ConnectionConfig> connectionConfig, EmployeeDbContext db)
+        public EmployeeImplementation(IOptions<ConnectionConfig> connectionConfig, IHostingEnvironment hostingEnvironment ,EmployeeDbContext db)
         {
             var connection = connectionConfig.Value;
             string connectionString = connection.myconn;
             _connectionString = Connections(connectionString);
             _db = db;
-          
+            _hostingEnvironment = hostingEnvironment;
+
+
         }
         public List<EmployeeContactsRole> GetWorkingEmployee()
         {
@@ -71,24 +77,6 @@ namespace CRUDOperationAPI.Implementation
         }
         public int RemoveEmployee(int id)
         {
-            //try
-            //{
-            //    int exe;
-            //    //var data = new Employee();
-            //    using (IDbConnection db = new SqlConnection(_connectionString))
-            //    {
-            //        string data = "Update Employees SET IsWorking = 0 where EmployeeID = @EmployeeID";
-            //        exe = db.Execute(data, new
-            //        {
-            //            EmployeeID = id
-            //        });
-            //    }
-            //    return exe;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
             var employeeDetail = (from emp in _db.Employees
                         where emp.EmployeeId == id
                         select emp).FirstOrDefault();
@@ -365,6 +353,37 @@ namespace CRUDOperationAPI.Implementation
             selectContact.ModifiedTimeStamp = con.ModifiedTimeStamp;
             _db.Contacts.Update(selectContact);
             _db.SaveChanges();
+        }
+
+        public string ExportEmployeeSchedule()
+        {
+            string rootFolder = _hostingEnvironment.WebRootPath;
+            string fileName = @"ExportEmployeeSchedule.xlsx";
+            FileInfo file = new FileInfo(Path.Combine(rootFolder, fileName));
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+                IList<EmployeeSchedule> empScheduleList = _db.EmployeeSchedule.ToList();
+                string name = "EmployeeSchedule " + DateTime.Now.ToString("dd-MM-yyyy");
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(name);
+                int totalRows = empScheduleList.Count();
+                worksheet.Cells[1, 1].Value = "Schedule ID";
+                worksheet.Cells[1, 2].Value = "Employee ID";
+                worksheet.Cells[1, 3].Value = "In Time";
+                worksheet.Cells[1, 4].Value = "Out Time";
+                worksheet.Cells[1, 5].Value = "Total Hour Work per day";
+                int i = 0;
+                for (int row = 2; row<=totalRows +1;row++)
+                {
+                    worksheet.Cells[row, 1].Value = empScheduleList[i].ScheduleID;
+                    worksheet.Cells[row, 2].Value = empScheduleList[i].EmployeeID;
+                    worksheet.Cells[row, 3].Value = empScheduleList[i].InTime;
+                    worksheet.Cells[row, 4].Value = empScheduleList[i].OutTime;
+                    worksheet.Cells[row, 5].Value = empScheduleList[i].TotalHourWorkPerday;
+                    i++;
+                }
+                package.Save();
+            }
+            return "Employe Schedule List has been exported successfully";
         }
     }
 }
