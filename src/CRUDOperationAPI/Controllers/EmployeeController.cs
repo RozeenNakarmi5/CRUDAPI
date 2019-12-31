@@ -14,6 +14,7 @@ using CRUDOperationAPI.Connections;
 using CRUDOperationAPI.Implementation;
 using CRUDOperationAPI.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using CRUDOperationAPI.PaginationClass;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,7 +39,7 @@ namespace CRUDOperationAPI.Controllers
         }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<EmployeeContactsRole> GetWorkingEmployee()
+        public IActionResult GetWorkingEmployee([FromQuery] Pagination pagination)
         {
             //return _context.Employees;
             //using (SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb;Database=EmployeeDb;Trusted_Connection=True;MultipleActiveResultSets=true"))
@@ -46,8 +47,8 @@ namespace CRUDOperationAPI.Controllers
             //    var eventName = connection.QueryFirst<Employee>("SELECT * FROM Employees");
             //    yield return eventName;
             //}
-            var getAllEmployee =  _employee.GetWorkingEmployee();
-            return getAllEmployee;
+            var getAllEmployee =  _employee.GetWorkingEmployee(pagination);
+            return Ok(getAllEmployee);
 
         }
         [Route("GetNotWorkingEmployee")]

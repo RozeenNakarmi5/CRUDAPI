@@ -1,4 +1,5 @@
 ﻿using CRUDOperationAPI.Models;
+using CRUDOperationAPI.PaginationClass;
 using CRUDOperationAPI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace CRUDOperationAPI
 {
     public interface IEmployeeService
     {
-        List<EmployeeContactsRole> GetWorkingEmployee();
+        IEnumerable<EmployeeContactsRole> GetWorkingEmployee(Pagination pagination);
         List<EmployeeContactsRole> GetNotWorkingEmployee();
         EmployeeContactsRole GetEmployeeByID(int id);
         int RemoveEmployee(int id);

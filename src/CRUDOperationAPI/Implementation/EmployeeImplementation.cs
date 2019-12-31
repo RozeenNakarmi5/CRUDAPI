@@ -14,6 +14,7 @@ using CRUDOperationAPI.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using OfficeOpenXml;
+using CRUDOperationAPI.PaginationClass;
 
 namespace CRUDOperationAPI.Implementation
 {
@@ -36,14 +37,51 @@ namespace CRUDOperationAPI.Implementation
 
 
         }
-        public List<EmployeeContactsRole> GetWorkingEmployee()
+        //public IEnumerable<Employee> GetWorkingEmployee(Pagination pagination)
+        //{
+
+        //    //var data = new List<EmployeeContactsRole>();
+        //    //using (IDbConnection db = new SqlConnection(_connectionString))
+        //    //{
+        //    //    data = db.Query<EmployeeContactsRole>("SELECT Employees.EmployeeID, Contacts.ContactID, Contacts.FirstName, Contacts.LastName, Contacts.Address, Contacts.Email, Contacts.ContactNumber, Contacts.EmergencyContactNumber, Employees.Designation, Employees.Salary, Employees.IsFullTimer FROM Employees Join Contacts On (Employees.ContactID = Contacts.ContactID) Where Employees.isWorking = 1").ToList();
+        //    //}
+        //    //return data;
+        //    return _db.Employees.OrderBy(on => on.CreatedTimeStamp)
+        //        .Where(x => x.IsWorking == true)
+        //        .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+        //        .Take(pagination.PageSize)
+        //        .ToList();
+            
+        //}
+        public IEnumerable<EmployeeContactsRole> GetWorkingEmployee(Pagination pagination)
         {
-            var data = new List<EmployeeContactsRole>();
-            using (IDbConnection db = new SqlConnection(_connectionString))
-            {
-                data = db.Query<EmployeeContactsRole>("SELECT Employees.EmployeeID, Contacts.ContactID, Contacts.FirstName, Contacts.LastName, Contacts.Address, Contacts.Email, Contacts.ContactNumber, Contacts.EmergencyContactNumber, Employees.Designation, Employees.Salary, Employees.IsFullTimer FROM Employees Join Contacts On (Employees.ContactID = Contacts.ContactID) Where Employees.isWorking = 1").ToList();
-            }
+            //var data = new List<EmployeeContactsRole>();
+            var data = (from emp in _db.Employees
+                     join contact in _db.Contacts on emp.ContactId equals contact.ContactID
+                        orderby contact.FirstName
+                        where emp.IsWorking == true
+                        select new EmployeeContactsRole
+                     {
+                         EmployeeID = emp.EmployeeId,
+                         ContactID = contact.ContactID,
+                         FirstName = contact.FirstName,
+                         LastName = contact.LastName,
+                         Address = contact.Address,
+                         Email = contact.Email,
+                         ContactNumber = contact.ContactNumber,
+                         EmergencyContactNumber = contact.EmergencyContactNumber,
+                         Designation = emp.Designation,
+                         Salary = emp.Salary,
+                         IsFullTimer = emp.IsFullTimer
+
+                     })
+                .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+                .Take(pagination.PageSize)
+                .ToList();
+
+
             return data;
+                    
         }
 
         public List<EmployeeContactsRole> GetNotWorkingEmployee()
@@ -385,5 +423,7 @@ namespace CRUDOperationAPI.Implementation
             }
             return "Employe Schedule List has been exported successfully";
         }
+
+        
     }
 }
