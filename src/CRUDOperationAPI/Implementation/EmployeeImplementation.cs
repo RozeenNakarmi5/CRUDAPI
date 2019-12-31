@@ -35,7 +35,7 @@ namespace CRUDOperationAPI.Implementation
             var data = new List<EmployeeContactsRole>();
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                data = db.Query<EmployeeContactsRole>("SELECT Employees.EmployeeID, Contacts.ContactID, Contacts.FirstName, Contacts.LastName, Contacts.Address, Contacts.Email, Contacts.ContactNumber, Contacts.EmergencyContactNumber, Employees.Designation, Employees.Salary, Employees.IsFullTimer FROM Employees Join Contacts On (Employees.ContactID = Contacts.ContactID) Where Employees.isWorking = 1").ToList();
+                data = db.Query<EmployeeContactsRole>("SELECT Employees.EmployeeID, Contacts.ContactID, Contacts.FirstName, Contacts.LastName, Contacts.Address, Contacts.Email, Contacts.ContactNumber, Contacts.EmergencyContactNumber, Contacts.ProfilePicture, Employees.Designation, Employees.Salary, Employees.IsFullTimer FROM Employees Join Contacts On (Employees.ContactID = Contacts.ContactID) Where Employees.isWorking = 1").ToList();
             }
             return data;
         }

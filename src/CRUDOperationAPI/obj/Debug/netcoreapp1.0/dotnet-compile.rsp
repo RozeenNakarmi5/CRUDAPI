@@ -245,6 +245,8 @@ D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Employee.cs
 D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\EmployeeProject.cs
 D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\EmployeeSchedule.cs
 D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Leaves.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\PagedResults.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\PagingParams.cs
 D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Projects.cs
 D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Roles.cs
 D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Users.cs

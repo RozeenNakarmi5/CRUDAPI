@@ -15,6 +15,9 @@ using CRUDOperationAPI.InterfaceClass;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CRUDOperationAPI.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace CRUDOperationAPI
 {
@@ -54,6 +57,14 @@ namespace CRUDOperationAPI
 
             services.AddCors();
 
+            //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            //services.AddScoped<IUrlHelper>(factory =>
+            //{
+            //    var actionContext = factory.GetService<IActionContextAccessor>()
+            //                               .ActionContext;
+            //    return new UrlHelper(actionContext);
+            //});
+
             services.AddScoped<ILoginServices, UserServiceImplementation>();
             services.AddScoped<IEmployeeService, EmployeeImplementation>();
             services.AddScoped<IClientService, ClientImplementation>();
@@ -72,6 +83,7 @@ namespace CRUDOperationAPI
             app.UseDeveloperExceptionPage();
             app.UseApplicationInsightsExceptionTelemetry();
             
+
             app.UseCors(
                option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
             );
