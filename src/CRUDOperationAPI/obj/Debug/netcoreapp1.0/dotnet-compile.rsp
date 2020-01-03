@@ -1,5 +1,5 @@
---temp-output:D:\login\CRUDAPI\src\CRUDOperationAPI\obj\Debug\netcoreapp1.0\
---out:D:\login\CRUDAPI\src\CRUDOperationAPI\bin\Debug\netcoreapp1.0\CRUDOperationAPI.dll
+--temp-output:D:\00Main\CRUDAPI\src\CRUDOperationAPI\obj\Debug\netcoreapp1.0\
+--out:D:\00Main\CRUDAPI\src\CRUDOperationAPI\bin\Debug\netcoreapp1.0\CRUDOperationAPI.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -197,58 +197,65 @@
 --reference:C:\Users\Percoid-IT\.nuget\packages\System.Xml.ReaderWriter\4.3.0\ref\netstandard1.3\System.Xml.ReaderWriter.dll
 --reference:C:\Users\Percoid-IT\.nuget\packages\System.Xml.XDocument\4.3.0\ref\netstandard1.3\System.Xml.XDocument.dll
 --reference:C:\Users\Percoid-IT\.nuget\packages\System.Xml.XmlDocument\4.0.1\ref\netstandard1.3\System.Xml.XmlDocument.dll
---resource:"D:\login\CRUDAPI\src\CRUDOperationAPI\obj\Debug\netcoreapp1.0\CRUDOperationAPIdotnet-compile.deps.json",CRUDOperationAPI.deps.json
-D:\login\CRUDAPI\src\CRUDOperationAPI\EmployeeDbContextModelSnapshot.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Program.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Startup.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\TokenAuthentication.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Contexts\EmployeeDbContext.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Controllers\ClientController.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Controllers\EmployeeController.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Controllers\LoginController.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Controllers\ProjectController.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Controllers\ValuesController.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Implementation\ClientImplementation.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Implementation\EmployeeImplementation.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Implementation\LoginServiceImplementation.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Implementation\ProjectImplementation.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IClientService.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IConnectionService.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IEmployeeService.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\ILoginServices.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IProjectService.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191119081424_InitialUpdate.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191119081424_InitialUpdate.Designer.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191122040723_InitialDatabase.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191122040723_InitialDatabase.Designer.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191202081948_Updated Database.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191202081948_Updated Database.Designer.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191202082720_Updated Database with primary key.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191202082720_Updated Database with primary key.Designer.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191203091148_Updated projects table.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191203091148_Updated projects table.Designer.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191205091806_Update Database with new model.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191205091806_Update Database with new model.Designer.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191206063853_Updated ContactDatabase.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Migrations\20191206063853_Updated ContactDatabase.Designer.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\ClientProject.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Clients.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Company.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\ConnectionConfig.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Contacts.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\DepartmentEmployee.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Departments.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Employee.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\EmployeeProject.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\EmployeeSchedule.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Leaves.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Projects.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Roles.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\Models\Users.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\ViewModels\ClientProjectViewModel.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\ViewModels\EmployeeContactsRole.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\ViewModels\EmployeeDepartmentViewModel.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\ViewModels\EmployeeProjectViewModel.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\ViewModels\ProjectViewModel.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\ViewModels\UpdateRole.cs
-D:\login\CRUDAPI\src\CRUDOperationAPI\ViewModels\UsersDetail.cs
+--resource:"D:\00Main\CRUDAPI\src\CRUDOperationAPI\obj\Debug\netcoreapp1.0\CRUDOperationAPIdotnet-compile.deps.json",CRUDOperationAPI.deps.json
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\EmployeeDbContextModelSnapshot.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Program.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Startup.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\TokenAuthentication.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Contexts\EmployeeDbContext.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Controllers\ClientController.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Controllers\DepartmentController.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Controllers\EmployeeController.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Controllers\LoginController.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Controllers\ProjectController.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Controllers\ValuesController.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Implementation\ClientImplementation.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Implementation\DepartmentImplementation.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Implementation\EmployeeImplementation.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Implementation\LoginServiceImplementation.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Implementation\ProjectImplementation.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IClientService.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IConnectionService.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IDepartmentService.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IEmployeeService.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\ILoginServices.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\InterfaceClass\IProjectService.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191119081424_InitialUpdate.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191119081424_InitialUpdate.Designer.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191122040723_InitialDatabase.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191122040723_InitialDatabase.Designer.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191202081948_Updated Database.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191202081948_Updated Database.Designer.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191202082720_Updated Database with primary key.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191202082720_Updated Database with primary key.Designer.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191203091148_Updated projects table.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191203091148_Updated projects table.Designer.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191205091806_Update Database with new model.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191205091806_Update Database with new model.Designer.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191206063853_Updated ContactDatabase.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Migrations\20191206063853_Updated ContactDatabase.Designer.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\ClientProject.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Clients.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Company.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\ConnectionConfig.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Contacts.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\DepartmentEmployee.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Departments.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Employee.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\EmployeeProject.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\EmployeeSchedule.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Leaves.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\PagedResults.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\PagingParams.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Projects.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Roles.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\Models\Users.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\ClientProjectViewModel.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\EmployeeContactsRole.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\EmployeeDepartmentViewModel.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\EmployeeProjectViewModel.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\LoginModel.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\ProjectViewModel.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\UpdateRole.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\UsersDetail.cs
+D:\00Main\CRUDAPI\src\CRUDOperationAPI\ViewModels\ViewClientAndProject.cs
