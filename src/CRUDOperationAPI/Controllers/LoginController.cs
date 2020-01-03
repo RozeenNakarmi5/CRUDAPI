@@ -34,7 +34,15 @@ namespace CRUDOperationAPI.Controllers
         public IActionResult Login([FromBody] Users Login)
         {
             var token = _login.GenerateToken(Login);
-            return Ok(new { token });
+            if (token == "Username or password is incorrect")
+            {
+                return NotFound("Invalid username or password");
+            }
+            else
+            {
+                return Ok(new { token });
+            }
+            
 
         }
 
