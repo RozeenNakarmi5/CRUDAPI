@@ -69,6 +69,7 @@ namespace CRUDOperationAPI.Implementation
                          Address = contact.Address,
                          Email = contact.Email,
                          ContactNumber = contact.ContactNumber,
+                         ProfilePicture = contact.ProfilePicture,
                          EmergencyContactNumber = contact.EmergencyContactNumber,
                          Designation = emp.Designation,
                          Salary = emp.Salary,
@@ -189,6 +190,7 @@ namespace CRUDOperationAPI.Implementation
                     parameter.Add("@Designation", emp.Designation);
                     parameter.Add("@IsFullTimer", emp.IsFullTimer);
                     parameter.Add("@Salary", emp.Salary);
+                    parameter.Add("@ProfilePicture", emp.ProfilePicture);
                     parameter.Add("@ModifiedTimeStamp", emp.ModifiedTimeStamp);
                     parameter.Add("@EmployeeID", emp.EmployeeID);
                     db.Execute("UpdateEmployee", parameter, commandType: CommandType.StoredProcedure);
