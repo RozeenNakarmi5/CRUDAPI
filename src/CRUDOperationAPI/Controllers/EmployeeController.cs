@@ -249,6 +249,21 @@ namespace CRUDOperationAPI.Controllers
         {
             return _employee.ExportEmployeeSchedule();
         }
+        [Route("GetEmpSchedule")]
+        [HttpGet]
+        public IActionResult GetEmpSchedule([FromQuery] Pagination pagination)
+        {
+            var getEmpSchedule = _employee.GetEmployeeSchedule(pagination);
+            return Ok(getEmpSchedule);
+        }
+        [Route("CountEmpSchedule")]
+        [HttpGet]
+        public IActionResult CountEmpSchedule()
+        {
+            var count = _employee.CountEmpSchedule();
+            return Ok(count);
+        }
+
     }
-    
+
 }

@@ -426,6 +426,34 @@ namespace CRUDOperationAPI.Implementation
             return "Employe Schedule List has been exported successfully";
         }
 
-        
+        public IEnumerable<EmployeeScheduleViewModel> GetEmployeeSchedule(Pagination pagination)
+        {
+            var data = (from empsch in _db.EmployeeSchedule
+                        join emp in _db.Employees on empsch.EmployeeID equals emp.EmployeeId
+                        join cont in _db.Contacts on emp.ContactId equals cont.ContactID
+                        orderby empsch.CreatedTimeStamp
+                        select new EmployeeScheduleViewModel
+                        {
+                            EmployeeID = emp.EmployeeId,
+                            EmployeeFirstName = cont.FirstName,
+                            EmployeeLastName = cont.LastName,
+                            InTime = empsch.InTime,
+                            OutTime = empsch.OutTime,
+                            TotalHourWorkPerday =empsch.TotalHourWorkPerday
+                        })
+                .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+                .Take(pagination.PageSize)
+                .ToList();
+
+
+            return data;
+        }
+
+        public int CountEmpSchedule()
+        {
+            var countEmpSche = (from empsche in _db.EmployeeSchedule
+                               select empsche).Count();
+            return countEmpSche;
+        }
     }
 }

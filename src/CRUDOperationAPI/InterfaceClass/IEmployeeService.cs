@@ -26,6 +26,8 @@ namespace CRUDOperationAPI
         void UpdateEmployeeDepartment(EmployeeDepartmentViewModel empDep);
         void UpdateContact(EmployeeContactsRole con);
         string ExportEmployeeSchedule();
+        IEnumerable<EmployeeScheduleViewModel> GetEmployeeSchedule(Pagination pagination);
+        int CountEmpSchedule();
        
 
 
