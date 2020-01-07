@@ -20,7 +20,7 @@ using CRUDOperationAPI.PaginationClass;
 
 namespace CRUDOperationAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     public class EmployeeController : Controller
     {
@@ -51,7 +51,9 @@ namespace CRUDOperationAPI.Controllers
             return Ok(getAllEmployee);
 
         }
+
         [Route("GetNotWorkingEmployee")]
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public IEnumerable<EmployeeContactsRole> GetNotWorkingEmployee()
         {
@@ -77,6 +79,7 @@ namespace CRUDOperationAPI.Controllers
             }
 
         // POST api/values
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         public async Task<IActionResult> PostEmployees([FromBody] EmployeeContactsRole employees)
         {
@@ -99,6 +102,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // PUT api/values/5
+        [Authorize(Roles = "Admin, Team Leads")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployees([FromRoute] int id, [FromBody] EmployeeContactsRole employees)
         {
@@ -119,6 +123,7 @@ namespace CRUDOperationAPI.Controllers
             return Ok();
         }
         //// DELETE api/values/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployees(int id)
         {
@@ -139,6 +144,7 @@ namespace CRUDOperationAPI.Controllers
 
             return Ok(employees);
         }
+
         [Route("EmployeeCount")]
         [HttpGet]
         public IActionResult EmployeeCount()
@@ -146,7 +152,9 @@ namespace CRUDOperationAPI.Controllers
             var countEmployee = _employee.CountEmployee();
             return Ok(countEmployee);
         }
+
         [Route("AddUsers/{id}")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateUsers([FromRoute] int id, [FromBody] UsersDetail employees)
         {
@@ -162,7 +170,9 @@ namespace CRUDOperationAPI.Controllers
             _employee.AddUsers(employees);
             return Ok();
         }
+
         [Route("UpdateRole/{id}")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateRole([FromRoute] int id, [FromBody] UpdateRole roles)
         {
@@ -187,6 +197,7 @@ namespace CRUDOperationAPI.Controllers
 
         }
         [Route("UpdateDepartment/{id}")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateDepartment([FromRoute] int id, [FromBody] EmployeeDepartmentViewModel departments)
         {
@@ -210,6 +221,7 @@ namespace CRUDOperationAPI.Controllers
             }
         }
         [Route("UpdateContact/{id}")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateContact([FromRoute] int id, [FromBody] EmployeeContactsRole contacts)
         {
@@ -233,6 +245,7 @@ namespace CRUDOperationAPI.Controllers
             }
         }
         [Route("AssignProjectToEmployee")]
+        [Authorize(Roles = "Admin, Team Leads")]
         [HttpPost]
         public IActionResult AssignProjectToEmployee([FromBody]EmployeeProjectViewModel employee)
         {
@@ -243,7 +256,9 @@ namespace CRUDOperationAPI.Controllers
             _employee.AssignProjectToEmployee(employee);
             return Ok();
         }
+
         [Route("ExportEmpSchedule")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public string ExportEmpSchedule()
         {

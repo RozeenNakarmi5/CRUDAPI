@@ -49,6 +49,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // POST api/values
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> PostClients([FromBody]ClientProjectViewModel clients)
         {
@@ -63,6 +64,7 @@ namespace CRUDOperationAPI.Controllers
         // PUT api/values/5
         
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutClients(int id, [FromBody]ClientProjectViewModel clients)
         {
             if (!ModelState.IsValid)
@@ -78,6 +80,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // DELETE api/values/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClients(int id)
         {
@@ -100,6 +103,7 @@ namespace CRUDOperationAPI.Controllers
             return Ok(countClient);
         }
         [Route("AssignProjectToClient")]
+        [Authorize(Roles = "Team Leads")]
         [HttpPost]
         public async Task<IActionResult> AssignProjectToClient([FromBody]ClientProjectViewModel clients)
         {
@@ -121,6 +125,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         [Route("SetClient/{id}")]
+        [Authorize(Roles = "Team Leads")]
         [HttpPut]
         public async Task<IActionResult> UpdateClientProject(int id, [FromBody]ClientProjectViewModel clients)
         {
@@ -136,6 +141,7 @@ namespace CRUDOperationAPI.Controllers
             return Ok();
         }
         [Route("SetClient/{id}")]
+        [Authorize(Roles = "Team Leads")]
         [HttpDelete]
         public async Task <IActionResult> DeleteClientProject(int id)
         {
