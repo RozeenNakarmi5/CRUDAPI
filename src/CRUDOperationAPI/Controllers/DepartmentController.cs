@@ -36,6 +36,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // POST api/values
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Post([FromBody] Departments dept)
         {
@@ -55,6 +56,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // PUT api/values/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult Put([FromRoute] int id, [FromBody]Departments dept)
         {
@@ -80,6 +82,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // DELETE api/values/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteDepartment(int id)
         {

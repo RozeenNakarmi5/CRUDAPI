@@ -21,6 +21,7 @@ namespace CRUDOperationAPI.Controllers
             _project = project;
         }
         // GET: api/values
+        
         [HttpGet]
         public IEnumerable<ProjectViewModel> GetNow()
         {
@@ -54,6 +55,7 @@ namespace CRUDOperationAPI.Controllers
 
         // POST api/values
         [Route("insert")]
+        [Authorize(Roles = "Team Leads")]
         [HttpPost]
         public async Task<IActionResult> PostProjects([FromBody]ProjectViewModel projects)
         {
@@ -68,6 +70,7 @@ namespace CRUDOperationAPI.Controllers
 
         // PUT api/values/5
         [Route("Put/{id}")]
+        [Authorize(Roles = "Team Leads")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProjects(int id, [FromBody]ProjectViewModel projects)
         {
@@ -84,6 +87,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         // DELETE api/values/5
+        [Authorize(Roles = "Team Leads")]
         [HttpDelete("{id}")]
         public IActionResult DeleteProjects(int id)
         {
@@ -100,6 +104,7 @@ namespace CRUDOperationAPI.Controllers
         }
 
         [Route("GetScrap/{id}")]
+        [Authorize(Roles = "Team Leads")]
         [HttpPut("{id}")]
         public async Task<IActionResult> RestoreProjects(int id)
         {
