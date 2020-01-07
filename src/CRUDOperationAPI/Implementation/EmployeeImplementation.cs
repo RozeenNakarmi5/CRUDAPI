@@ -58,6 +58,10 @@ namespace CRUDOperationAPI.Implementation
             //var data = new List<EmployeeContactsRole>();
             var data = (from emp in _db.Employees
                      join contact in _db.Contacts on emp.ContactId equals contact.ContactID
+                     join users in _db.Users on emp.UserID equals users.UserID
+                     join roles in _db.Roles on users.RoleID equals roles.RoleID
+                     join departmentEmp in _db.DepartmentEmployee on emp.EmployeeId equals departmentEmp.EmployeeID
+                     join department in _db.Departments on departmentEmp.DepartmentID equals department.DepartmentID
                         orderby contact.FirstName
                         where emp.IsWorking == true
                         select new EmployeeContactsRole
@@ -72,6 +76,8 @@ namespace CRUDOperationAPI.Implementation
                          ProfilePicture = contact.ProfilePicture,
                          EmergencyContactNumber = contact.EmergencyContactNumber,
                          Designation = emp.Designation,
+                         RoleName = roles.RoleName,
+                         DepartmentName = department.DepartmentName,
                          Salary = emp.Salary,
                          IsFullTimer = emp.IsFullTimer
 
