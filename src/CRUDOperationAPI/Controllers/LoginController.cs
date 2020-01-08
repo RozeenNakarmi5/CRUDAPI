@@ -38,7 +38,7 @@ namespace CRUDOperationAPI.Controllers
             {
                 return NotFound("Invalid username or password");
             }
-            else if(token == "Already logged in")
+            else if (token == "Already logged in")
             {
                 return NotFound("User is already logged in");
             }
@@ -46,7 +46,7 @@ namespace CRUDOperationAPI.Controllers
             {
                 return Ok(new { token });
             }
-            
+
 
         }
 

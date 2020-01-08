@@ -41,9 +41,9 @@ namespace CRUDOperationAPI.Implementation
                                join emp in _Context.Employees on users.UserID equals emp.UserID
                                where Login.UserName == users.UserName
                                select new { emp.EmployeeId }).FirstOrDefault();
-            if (query.isLoggedIn == false)
+            if (query != null)
             {
-                if (query != null)
+                if (query.isLoggedIn == false)
                 {
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_auth.Value.SecretKey));
                     var code = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -106,13 +106,12 @@ namespace CRUDOperationAPI.Implementation
                 }
                 else
                 {
-                    return "Username or password is incorrect";
-
+                    return "Already logged in";
                 }
             }
             else
             {
-                return "Already logged in";
+                return "Username or password is incorrect";
             }
             
         }
