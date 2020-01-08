@@ -8,9 +8,10 @@ using CRUDOperationAPI.Contexts;
 namespace CRUDOperationAPI.Migrations
 {
     [DbContext(typeof(EmployeeDbContext))]
-    partial class EmployeeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200108054640_update users table")]
+    partial class updateuserstable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

@@ -251,6 +251,8 @@ D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Migrations\2
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Migrations\20191224083353_Remove.Designer.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Migrations\20191224083513_Added TotalHourWorkPerDay in EmployeeSchedule.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Migrations\20191224083513_Added TotalHourWorkPerDay in EmployeeSchedule.Designer.cs
+D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Migrations\20200108054640_update users table.cs
+D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Migrations\20200108054640_update users table.Designer.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ClientProject.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\Clients.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\Company.cs
@@ -272,6 +274,7 @@ D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ViewM
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ViewModels\EmployeeDepartmentViewModel.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ViewModels\EmployeeProjectViewModel.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ViewModels\EmployeeScheduleViewModel.cs
+D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ViewModels\LoginInfo.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ViewModels\LoginModel.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ViewModels\ProjectViewModel.cs
 D:\Assignment\EmployeeManagementSystem\CRUDAPI\src\CRUDOperationAPI\Models\ViewModels\UpdateRole.cs

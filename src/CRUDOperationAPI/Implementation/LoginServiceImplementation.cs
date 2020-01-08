@@ -36,37 +36,41 @@ namespace CRUDOperationAPI.Implementation
         {
             var query = (from t in _Context.Users
                          join login in _Context.Roles on t.RoleID equals login.RoleID
-                         where Login.UserName == t.UserName && Login.Password == t.Password select new {login.RoleName,t.UserName,t.Password,t.UserID }).FirstOrDefault();
+                         where Login.UserName == t.UserName && Login.Password == t.Password select new {login.RoleName,t.UserName,t.Password,t.UserID,t.isLoggedIn }).FirstOrDefault();
             var getEmployee = (from users in _Context.Users
                                join emp in _Context.Employees on users.UserID equals emp.UserID
                                where Login.UserName == users.UserName
-      
-                               select new { emp.EmployeeId }).FirstOrDefault()
-                               ;
-            if (query != null)
+                               select new { emp.EmployeeId }).FirstOrDefault();
+            if (query.isLoggedIn == false)
             {
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_auth.Value.SecretKey));
-                var code = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var tokenDescriptions = new SecurityTokenDescriptor
+                if (query != null)
                 {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_auth.Value.SecretKey));
+                    var code = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var tokenDescriptions = new SecurityTokenDescriptor
                     {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
                         new Claim("UserID", query.UserID.ToString()),
                         new Claim(ClaimTypes.Role, query.RoleName)
-                    }),
-                    Issuer = _auth.Value.Issuer,
-                    Audience = _auth.Value.Audience,
-                    Expires = DateTime.UtcNow.AddDays(1),
-                    SigningCredentials = code
-                };
+                        }),
+                        Issuer = _auth.Value.Issuer,
+                        Audience = _auth.Value.Audience,
+                        Expires = DateTime.UtcNow.AddDays(1),
+                        SigningCredentials = code
+                    };
 
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityToken = tokenHandler.CreateToken(tokenDescriptions);
-                var tokenString = tokenHandler.WriteToken(securityToken);
-
-                try
-                {
-                    var empSchedule = _Context.EmployeeSchedule.Where(x => x.EmployeeID == getEmployee.EmployeeId).OrderByDescending(x => x.CreatedTimeStamp).FirstOrDefault();                    
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var securityToken = tokenHandler.CreateToken(tokenDescriptions);
+                    var tokenString = tokenHandler.WriteToken(securityToken);
+                    var checkLogged = (from t in _Context.Users
+                                       where query.UserName == t.UserName
+                                       select t).FirstOrDefault();
+                    checkLogged.isLoggedIn = true;
+                    _Context.Users.Update(checkLogged);
+                    try
+                    {
+                        var empSchedule = _Context.EmployeeSchedule.Where(x => x.EmployeeID == getEmployee.EmployeeId).OrderByDescending(x => x.CreatedTimeStamp).FirstOrDefault();
                         if (empSchedule == null)
                         {
                             var insertIntoEmpSchedule = new EmployeeSchedule
@@ -85,29 +89,32 @@ namespace CRUDOperationAPI.Implementation
                                 InTime = DateTime.Now
                             };
                             _Context.EmployeeSchedule.Add(insertAnother);
-                            if(empSchedule.OutTime != null)
+                            if (empSchedule.OutTime != null)
                             {
                                 _Context.SaveChanges();
                             }
 
-                        return tokenString;  
+                            return tokenString;
                         }
-                    
-                    
-                    
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+
+                    return tokenString;
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw ex;
+                    return "Username or password is incorrect";
+
                 }
-               
-                return tokenString; 
             }
             else
             {
-                return "Username or password is incorrect";
-
+                return "Already logged in";
             }
+            
         }
 
         public int Logout(int UserID)
@@ -120,6 +127,12 @@ namespace CRUDOperationAPI.Implementation
             var empSchedule = (from empSc in _Context.EmployeeSchedule
                                where empSc.EmployeeID == emp.EmployeeId && empSc.OutTime == null
                                select empSc).OrderByDescending(x => x.CreatedTimeStamp).FirstOrDefault();
+
+            var users = (from usersInfo in _Context.Users
+                         where usersInfo.UserID == UserID
+                         select usersInfo).FirstOrDefault();
+            users.isLoggedIn = false;
+
             empSchedule.OutTime = DateTime.Now;
             empSchedule.TotalHourWorkPerday = empSchedule.OutTime.Value.Subtract(empSchedule.InTime.Value);
             empSchedule.ModifiedTimeStamp = DateTime.Now;
