@@ -12,6 +12,8 @@ using Microsoft.Extensions.Options;
 using CRUDOperationAPI.InterfaceClass;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,15 +40,17 @@ namespace CRUDOperationAPI.Controllers
             {
                 return NotFound("Invalid username or password");
             }
-            else if(token == "Already logged in")
+            else if (token == "Already logged in")
             {
-                return NotFound("User is already logged in");
+
+                return BadRequest();
+
             }
             else
             {
                 return Ok(new { token });
             }
-            
+
 
         }
 
