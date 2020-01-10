@@ -31,10 +31,15 @@ namespace CRUDOperationAPI.Controllers
                 int UserID = Convert.ToInt32(User.Claims.First(c => c.Type == "UserID").Value);
                 var emp = _database.Employees.FirstOrDefault(x => x.UserID == UserID);
                 var contact = _database.Contacts.FirstOrDefault(x => x.ContactID == emp.ContactId);
+                var roles = from users in _database.Users
+                            join role in _database.Roles on users.RoleID equals role.RoleID
+                            where users.UserID == emp.UserID
+                            select role.RoleName;
                 return new
                 {
                     contact.FirstName,
-                    contact.LastName
+                    contact.LastName,
+                    roles
                 };
             }
             catch (Exception ex)
