@@ -10,8 +10,8 @@ namespace CRUDOperationAPI.ViewModels
         public int ProjectID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
-        public string ProjectStartDate { get; set; }
-        public string ProjectEndDate { get; set; }
+        public DateTime ProjectStartDate { get; set; }
+        public DateTime ProjectEndDate { get; set; }
         public string IsActive { get; set; }
         public DateTime CreatedTimeStamp { get; set; }
         public DateTime ModifiedTimeStamp { get; set; }

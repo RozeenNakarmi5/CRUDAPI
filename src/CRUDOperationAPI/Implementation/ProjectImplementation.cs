@@ -141,11 +141,10 @@ namespace CRUDOperationAPI.Implementation
                 try
                 {
                     var parameter = new DynamicParameters();
-                    
                     parameter.Add("@ProjectName", project.ProjectName);
                     parameter.Add("@ProjectDescription", project.ProjectDescription); 
-                    parameter.Add("@ProjectStartDate", project.ProjectStartDate);
-                    parameter.Add("@ProjectEndDate", project.ProjectEndDate);
+                    parameter.Add("@ProjectStartDate", project.ProjectStartDate.ToString("MM/dd/yyyy"));
+                    parameter.Add("@ProjectEndDate", project.ProjectEndDate.ToString("MM/dd/yyyy"));
                     parameter.Add("@CreatedTimeStamp", project.CreatedTimeStamp);
                     parameter.Add("@IsActive", project.IsActive);
                     db.Execute("InsertIntoProject", parameter, commandType: CommandType.StoredProcedure);
@@ -166,8 +165,8 @@ namespace CRUDOperationAPI.Implementation
                     parameter.Add("@ProjectID", project.ProjectID);
                     parameter.Add("@ProjectName", project.ProjectName);
                     parameter.Add("@projectDescription", project.ProjectDescription);
-                    parameter.Add("@ProjectStartDate", project.ProjectStartDate);
-                    parameter.Add("@ProjectEndDate", project.ProjectEndDate);
+                    parameter.Add("@ProjectStartDate", project.ProjectStartDate.ToString("MM/dd/yyyy"));
+                    parameter.Add("@ProjectEndDate", project.ProjectEndDate.ToString("MM/dd/yyyy"));
                     parameter.Add("@ModifiedTimeStamp", project.ModifiedTimeStamp);
                     db.Execute("UpdateProject", parameter, commandType: CommandType.StoredProcedure);
                       }
