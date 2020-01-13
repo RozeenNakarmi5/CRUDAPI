@@ -29,8 +29,8 @@ namespace CRUDOperationAPI
         string ExportEmployeeSchedule();
         IEnumerable<EmployeeScheduleViewModel> GetEmployeeSchedule(Pagination pagination);
         int CountEmpSchedule();
+        List<EmployeeDepartmentWorkTime> GetTotalWorkingHrs();
         int CountEmpProjects();
-
 
 
     }
