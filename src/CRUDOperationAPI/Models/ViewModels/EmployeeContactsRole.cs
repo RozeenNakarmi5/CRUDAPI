@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRUDOperationAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace CRUDOperationAPI.ViewModels
     public class EmployeeContactsRole
     {
         public int? EmployeeID { get; set; }
+        public int EmployeeProjectID { get; set; }
         public int? ContactID { get; set; }
         public int? RoleID { get; set; }
         public int? UserID { get; set; }
@@ -30,6 +32,7 @@ namespace CRUDOperationAPI.ViewModels
         public string ProfilePicture { get; set; }
         public DateTime CreatedTimeStamp { get; set; }
         public DateTime ModifiedTimeStamp { get; set; }
+        public string ProjectNames { get; set; }
         public EmployeeContactsRole()
         {
             CreatedTimeStamp = DateTime.Now;

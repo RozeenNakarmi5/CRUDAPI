@@ -51,6 +51,14 @@ namespace CRUDOperationAPI.Controllers
             return Ok(getAllEmployee);
 
         }
+        [Route("EmpProject")]
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult GetEmpProject([FromQuery] Pagination pagination)
+        {
+            var getEmpProject = _employee.EmpProject(pagination);
+            return Ok(getEmpProject);
+        }
 
         [Route("GetNotWorkingEmployee")]
         [Authorize(Roles ="Admin")]
@@ -144,6 +152,23 @@ namespace CRUDOperationAPI.Controllers
 
             return Ok(employees);
         }
+        [Route("DeleteProject/{id}")]
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public IActionResult DeleteEmployeesProject(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var employeeProject = _employee.DeleteEmployeeAndProject(id);
+            if(employeeProject == 0)
+            {
+                return NotFound();
+            }
+            return Ok(employeeProject);
+        }
+
 
         [Route("EmployeeCount")]
         [HttpGet]
@@ -276,6 +301,13 @@ namespace CRUDOperationAPI.Controllers
         public IActionResult CountEmpSchedule()
         {
             var count = _employee.CountEmpSchedule();
+            return Ok(count);
+        }
+        [Route("CountEmpPrj")]
+        [HttpGet]
+        public IActionResult CountEmpProject()
+        {
+            var count = _employee.CountEmpProjects();
             return Ok(count);
         }
 

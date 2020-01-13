@@ -62,6 +62,8 @@ namespace CRUDOperationAPI.Implementation
                      join roles in _db.Roles on users.RoleID equals roles.RoleID
                      join departmentEmp in _db.DepartmentEmployee on emp.EmployeeId equals departmentEmp.EmployeeID
                      join department in _db.Departments on departmentEmp.DepartmentID equals department.DepartmentID
+                     //join projectemp in _db.EmployeeProject on emp.EmployeeId equals projectemp.EmployeeID
+                     //join project in _db.Projects on projectemp.ProjectID equals project.ProjectID
                         orderby contact.FirstName
                         where emp.IsWorking == true
                         select new EmployeeContactsRole
@@ -79,17 +81,52 @@ namespace CRUDOperationAPI.Implementation
                          RoleName = roles.RoleName,
                          DepartmentName = department.DepartmentName,
                          Salary = emp.Salary,
-                         IsFullTimer = emp.IsFullTimer
-
-                     })
+                         IsFullTimer = emp.IsFullTimer,
+                         //ProjectNames = project.ProjectName
+                        })
                 .Skip((pagination.PageNumber - 1) * pagination.PageSize)
                 .Take(pagination.PageSize)
                 .ToList();
-
-
             return data;
-                    
         }
+        public IEnumerable<EmployeeContactsRole> EmpProject(Pagination pagination)
+        {
+            //var data = new List<EmployeeContactsRole>();
+            var data = (from emp in _db.Employees
+                        join contact in _db.Contacts on emp.ContactId equals contact.ContactID
+                        join users in _db.Users on emp.UserID equals users.UserID
+                        join roles in _db.Roles on users.RoleID equals roles.RoleID
+                        join departmentEmp in _db.DepartmentEmployee on emp.EmployeeId equals departmentEmp.EmployeeID
+                        join department in _db.Departments on departmentEmp.DepartmentID equals department.DepartmentID
+                        join projectemp in _db.EmployeeProject on emp.EmployeeId equals projectemp.EmployeeID
+                        join project in _db.Projects on projectemp.ProjectID equals project.ProjectID
+                        orderby contact.FirstName
+                        where emp.IsWorking == true
+                        select new EmployeeContactsRole
+                        {
+                            EmployeeID = emp.EmployeeId,
+                            ContactID = contact.ContactID,
+                            FirstName = contact.FirstName,
+                            LastName = contact.LastName,
+                            Address = contact.Address,
+                            Email = contact.Email,
+                            ContactNumber = contact.ContactNumber,
+                            ProfilePicture = contact.ProfilePicture,
+                            EmergencyContactNumber = contact.EmergencyContactNumber,
+                            Designation = emp.Designation,
+                            RoleName = roles.RoleName,
+                            DepartmentName = department.DepartmentName,
+                            Salary = emp.Salary,
+                            IsFullTimer = emp.IsFullTimer,
+                            ProjectNames = project.ProjectName,
+                            EmployeeProjectID = projectemp.EmployeeProjectID
+                        })
+                .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+                .Take(pagination.PageSize)
+                .ToList();
+            return data;
+        }
+
 
         public List<EmployeeContactsRole> GetNotWorkingEmployee()
         {
@@ -460,6 +497,12 @@ namespace CRUDOperationAPI.Implementation
             var countEmpSche = (from empsche in _db.EmployeeSchedule
                                select empsche).Count();
             return countEmpSche;
+        }
+        public int CountEmpProjects()
+        {
+            var countEmpPrj = (from empprj in _db.EmployeeProject
+                                select empprj).Count();
+            return countEmpPrj;
         }
     }
 }
