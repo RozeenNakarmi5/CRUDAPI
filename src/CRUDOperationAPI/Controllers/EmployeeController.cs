@@ -278,6 +278,14 @@ namespace CRUDOperationAPI.Controllers
             var count = _employee.CountEmpSchedule();
             return Ok(count);
         }
+        [AllowAnonymous]
+        [Route("GetWorkTime")]
+        [HttpGet]
+        public IActionResult GetWorkingHrs()
+        {
+            var getTime= _employee.GetTotalWorkingHrs();
+            return Ok(getTime);
+        }
 
     }
 

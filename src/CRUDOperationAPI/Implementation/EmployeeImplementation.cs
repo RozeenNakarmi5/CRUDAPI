@@ -16,6 +16,7 @@ using System.IO;
 using OfficeOpenXml;
 using CRUDOperationAPI.PaginationClass;
 
+
 namespace CRUDOperationAPI.Implementation
 {
     public class EmployeeImplementation : IConnectionService, IEmployeeService
@@ -23,11 +24,11 @@ namespace CRUDOperationAPI.Implementation
         private string _connectionString;
         private readonly EmployeeDbContext _db;
         private readonly IHostingEnvironment _hostingEnvironment;
-        
+
 
         //private IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["myconn"].ConnectionString);
 
-        public EmployeeImplementation(IOptions<ConnectionConfig> connectionConfig, IHostingEnvironment hostingEnvironment ,EmployeeDbContext db)
+        public EmployeeImplementation(IOptions<ConnectionConfig> connectionConfig, IHostingEnvironment hostingEnvironment, EmployeeDbContext db)
         {
             var connection = connectionConfig.Value;
             string connectionString = connection.myconn;
@@ -51,44 +52,44 @@ namespace CRUDOperationAPI.Implementation
         //        .Skip((pagination.PageNumber - 1) * pagination.PageSize)
         //        .Take(pagination.PageSize)
         //        .ToList();
-            
+
         //}
         public IEnumerable<EmployeeContactsRole> GetWorkingEmployee(Pagination pagination)
         {
             //var data = new List<EmployeeContactsRole>();
             var data = (from emp in _db.Employees
-                     join contact in _db.Contacts on emp.ContactId equals contact.ContactID
-                     join users in _db.Users on emp.UserID equals users.UserID
-                     join roles in _db.Roles on users.RoleID equals roles.RoleID
-                     join departmentEmp in _db.DepartmentEmployee on emp.EmployeeId equals departmentEmp.EmployeeID
-                     join department in _db.Departments on departmentEmp.DepartmentID equals department.DepartmentID
+                        join contact in _db.Contacts on emp.ContactId equals contact.ContactID
+                        join users in _db.Users on emp.UserID equals users.UserID
+                        join roles in _db.Roles on users.RoleID equals roles.RoleID
+                        join departmentEmp in _db.DepartmentEmployee on emp.EmployeeId equals departmentEmp.EmployeeID
+                        join department in _db.Departments on departmentEmp.DepartmentID equals department.DepartmentID
                         orderby contact.FirstName
                         where emp.IsWorking == true
                         select new EmployeeContactsRole
-                     {
-                         EmployeeID = emp.EmployeeId,
-                         ContactID = contact.ContactID,
-                         FirstName = contact.FirstName,
-                         LastName = contact.LastName,
-                         Address = contact.Address,
-                         Email = contact.Email,
-                         ContactNumber = contact.ContactNumber,
-                         ProfilePicture = contact.ProfilePicture,
-                         EmergencyContactNumber = contact.EmergencyContactNumber,
-                         Designation = emp.Designation,
-                         RoleName = roles.RoleName,
-                         DepartmentName = department.DepartmentName,
-                         Salary = emp.Salary,
-                         IsFullTimer = emp.IsFullTimer
+                        {
+                            EmployeeID = emp.EmployeeId,
+                            ContactID = contact.ContactID,
+                            FirstName = contact.FirstName,
+                            LastName = contact.LastName,
+                            Address = contact.Address,
+                            Email = contact.Email,
+                            ContactNumber = contact.ContactNumber,
+                            ProfilePicture = contact.ProfilePicture,
+                            EmergencyContactNumber = contact.EmergencyContactNumber,
+                            Designation = emp.Designation,
+                            RoleName = roles.RoleName,
+                            DepartmentName = department.DepartmentName,
+                            Salary = emp.Salary,
+                            IsFullTimer = emp.IsFullTimer
 
-                     })
+                        })
                 .Skip((pagination.PageNumber - 1) * pagination.PageSize)
                 .Take(pagination.PageSize)
                 .ToList();
 
 
             return data;
-                    
+
         }
 
         public List<EmployeeContactsRole> GetNotWorkingEmployee()
@@ -105,7 +106,7 @@ namespace CRUDOperationAPI.Implementation
         public EmployeeContactsRole GetEmployeeByID(int id)
         {
             try
-             {
+            {
                 EmployeeContactsRole data;
 
                 using (IDbConnection db = new SqlConnection(_connectionString))
@@ -118,27 +119,27 @@ namespace CRUDOperationAPI.Implementation
             {
                 throw ex;
             }
-            
+
         }
         public int RemoveEmployee(int id)
         {
             var employeeDetail = (from emp in _db.Employees
-                        where emp.EmployeeId == id
-                        select emp).FirstOrDefault();
+                                  where emp.EmployeeId == id
+                                  select emp).FirstOrDefault();
             //null cha ki chaina check
             if (employeeDetail != null)
             {
                 employeeDetail.IsWorking = false;
                 _db.Employees.Update(employeeDetail);
-            
+
                 var userDetail = (from users in _db.Users
-                                      where users.UserID == employeeDetail.UserID
-                                      select users).FirstOrDefault();
+                                  where users.UserID == employeeDetail.UserID
+                                  select users).FirstOrDefault();
                 if (userDetail != null && employeeDetail.IsWorking == false)
                 {
                     _db.Users.Remove(userDetail);
                 }
-                
+
             }
 
             return _db.SaveChanges();
@@ -152,8 +153,8 @@ namespace CRUDOperationAPI.Implementation
             {
                 try
                 {
-                    if(emp.FirstName != null && emp.LastName != null && emp.Address != null && emp.Email != null && emp.ContactNumber != null && emp.EmergencyContactNumber != null &&
-                        emp.ProfilePicture != null && emp.Designation != null && emp.Salary != null && emp.UserName != null && emp.IsFullTimer !=null && emp.Password != null &&
+                    if (emp.FirstName != null && emp.LastName != null && emp.Address != null && emp.Email != null && emp.ContactNumber != null && emp.EmergencyContactNumber != null &&
+                        emp.ProfilePicture != null && emp.Designation != null && emp.Salary != null && emp.UserName != null && emp.IsFullTimer != null && emp.Password != null &&
                          emp.RoleID != null)
                     {
                         var parameter = new DynamicParameters();
@@ -176,8 +177,8 @@ namespace CRUDOperationAPI.Implementation
 
                         db.Execute("InsertIntoContactsAndEmployee", parameter, commandType: CommandType.StoredProcedure);
                     }
-                    
-                   
+
+
                 }
                 catch (Exception ex)
                 {
@@ -214,7 +215,7 @@ namespace CRUDOperationAPI.Implementation
             {
                 // string sqlQuery = "Select Count(Distinct(EmployeeID)) from Employees";
                 // exe= db.Execute(sqlQuery);
-                 exe = db.Query<int>("Select Count(Distinct(EmployeeID)) from Employees where IsWorking = 1").FirstOrDefault();
+                exe = db.Query<int>("Select Count(Distinct(EmployeeID)) from Employees where IsWorking = 1").FirstOrDefault();
             }
             return exe;
         }
@@ -260,12 +261,12 @@ namespace CRUDOperationAPI.Implementation
                         };
                         _db.EmployeeProject.Add(projectAssign);
                     }
-                    
+
                 }
                 _db.SaveChanges();
 
             }
-        } 
+        }
         public void UpdateProjectToEmployee(EmployeeProjectViewModel empPro)
         {
             try
@@ -279,7 +280,7 @@ namespace CRUDOperationAPI.Implementation
                     db.Execute("UpdateProjectEmployee", parameter, commandType: CommandType.StoredProcedure);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -311,34 +312,34 @@ namespace CRUDOperationAPI.Implementation
 
             var selectUser = (from user in _db.Users
                               where user.UserName == userDetail.UserName
-                             select user).FirstOrDefault();
-            
-                if (selectUser == null)
+                              select user).FirstOrDefault();
+
+            if (selectUser == null)
+            {
+                var addUsers = new Users
                 {
-                    var addUsers = new Users
-                    {
-                        UserName = userDetail.UserName,
-                        Password = userDetail.Password,
-                        RoleID = userDetail.RoleID
-                    };
-                    _db.Users.Add(addUsers);
+                    UserName = userDetail.UserName,
+                    Password = userDetail.Password,
+                    RoleID = userDetail.RoleID
+                };
+                _db.Users.Add(addUsers);
+                _db.SaveChanges();
+                var employeeDetail = (from emp in _db.Employees
+                                      where emp.EmployeeId == userDetail.EmployeeId
+                                      select emp).FirstOrDefault();
+                if (employeeDetail.EmployeeId != 0 && employeeDetail.IsWorking == false)
+                {
+                    employeeDetail.UserID = addUsers.UserID;
+                    employeeDetail.IsWorking = true;
+                    _db.Employees.Update(employeeDetail);
                     _db.SaveChanges();
-                    var employeeDetail = (from emp in _db.Employees
-                                          where emp.EmployeeId == userDetail.EmployeeId
-                                          select emp).FirstOrDefault();
-                    if (employeeDetail.EmployeeId != 0 && employeeDetail.IsWorking == false)
-                    {
-                        employeeDetail.UserID = addUsers.UserID;
-                        employeeDetail.IsWorking = true;
-                        _db.Employees.Update(employeeDetail);
-                        _db.SaveChanges();
-                    }
                 }
+            }
         }
 
         public void UpdateRoleOfEmployee(UpdateRole updateRoles)
         {
-            if(updateRoles.EmployeeId != 0)
+            if (updateRoles.EmployeeId != 0)
             {
                 var selectRole = (from emp in _db.Employees
                                   join user in _db.Users on emp.UserID equals user.UserID
@@ -365,7 +366,7 @@ namespace CRUDOperationAPI.Implementation
             var selectEmployee = (from dept in _db.DepartmentEmployee
                                   where dept.EmployeeID == empDep.EmployeeId
                                   select dept).FirstOrDefault();
-            
+
             if (selectEmployee == null)
             {
                 var assignDepartmentToEmployee = new DepartmentEmployee
@@ -402,7 +403,7 @@ namespace CRUDOperationAPI.Implementation
 
         public string ExportEmployeeSchedule()
         {
-            
+
             string rootFolder = _hostingEnvironment.WebRootPath;
             string fileName = @"ExportEmployeeSchedule.xlsx";
             FileInfo file = new FileInfo(Path.Combine(rootFolder, fileName));
@@ -418,7 +419,7 @@ namespace CRUDOperationAPI.Implementation
                 worksheet.Cells[1, 4].Value = "Out Time";
                 worksheet.Cells[1, 5].Value = "Total Hour Work per day";
                 int i = 0;
-                for (int row = 2; row<=totalRows +1;row++)
+                for (int row = 2; row <= totalRows + 1; row++)
                 {
                     worksheet.Cells[row, 1].Value = empScheduleList[i].ScheduleID;
                     worksheet.Cells[row, 2].Value = empScheduleList[i].EmployeeID;
@@ -445,7 +446,7 @@ namespace CRUDOperationAPI.Implementation
                             EmployeeLastName = cont.LastName,
                             InTime = empsch.InTime,
                             OutTime = empsch.OutTime,
-                            TotalHourWorkPerday =empsch.TotalHourWorkPerday
+                            TotalHourWorkPerday = empsch.TotalHourWorkPerday
                         })
                 .Skip((pagination.PageNumber - 1) * pagination.PageSize)
                 .Take(pagination.PageSize)
@@ -454,12 +455,39 @@ namespace CRUDOperationAPI.Implementation
 
             return data;
         }
-
         public int CountEmpSchedule()
         {
             var countEmpSche = (from empsche in _db.EmployeeSchedule
-                               select empsche).Count();
+                                select empsche).Count();
             return countEmpSche;
         }
+
+        public List<EmployeeDepartmentWorkTime> GetTotalWorkingHrs()
+        {
+
+            var data = new List<EmployeeDepartmentWorkTime>();
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+
+                data = db.Query<EmployeeDepartmentWorkTime>("select EmployeeSchedule.employeeID, Contacts.FirstName, Departments.DepartmentName, sum(DATEDIFF(HOUR, '0:00:00', EmployeeSchedule.TotalHourWorkPerday)) as totalhrs, " +
+                                        "avg(DATEDIFF(HOUR, '0:00:00', EmployeeSchedule.TotalHourWorkPerday)) as avghrs from EmployeeSchedule " +
+                                        "join DepartmentEmployee on EmployeeSchedule.employeeID = DepartmentEmployee.employeeID " +
+                                        "join Departments on Departments.DepartmentID = DepartmentEmployee.DepartmentID " +
+                                        "join Employees on Employees.employeeID = DepartmentEmployee.employeeID " +
+                                        "join Contacts on Contacts.ContactID = Employees.ContactId " +
+                                        "group by EmployeeSchedule.EmployeeID, Contacts.FirstName, Departments.DepartmentName;").ToList();
+            }
+            //select EmployeeSchedule.employeeID, Contacts.FirstName, Departments.DepartmentName, sum(DATEDIFF(HOUR, '0:00:00', [EmployeeSchedule].TotalHourWorkPerday)) as totalhrs
+            //from[EmployeeDb].[dbo].[EmployeeSchedule]
+            //join DepartmentEmployee on EmployeeSchedule.employeeID = DepartmentEmployee.employeeID
+            //join Departments on Departments.DepartmentID = DepartmentEmployee.DepartmentID
+            //join Employees on Employees.employeeID = DepartmentEmployee.employeeID
+
+
+            //join Contacts on Contacts.ContactID = Employees.ContactId
+            //group by EmployeeSchedule.EmployeeID, Contacts.FirstName, Departments.DepartmentName;
+            return data;
+        }
+
     }
 }
