@@ -11,6 +11,7 @@ namespace CRUDOperationAPI
     public interface IEmployeeService
     {
         IEnumerable<EmployeeContactsRole> GetWorkingEmployee(Pagination pagination);
+        IEnumerable<EmployeeContactsRole> EmpProject(Pagination pagination);
         List<EmployeeContactsRole> GetNotWorkingEmployee();
         EmployeeContactsRole GetEmployeeByID(int id);
         int RemoveEmployee(int id);
@@ -28,7 +29,8 @@ namespace CRUDOperationAPI
         string ExportEmployeeSchedule();
         IEnumerable<EmployeeScheduleViewModel> GetEmployeeSchedule(Pagination pagination);
         int CountEmpSchedule();
-       
+        int CountEmpProjects();
+
 
 
     }

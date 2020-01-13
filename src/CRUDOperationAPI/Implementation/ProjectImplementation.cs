@@ -54,24 +54,6 @@ namespace CRUDOperationAPI.Implementation
         }
         public int DisableProject(int id)
         {
-            //try
-            //{
-            //    int exe;
-            //    //var data = new Employee();
-            //    using (IDbConnection db = new SqlConnection(_connectionString))
-            //    {
-            //        string data = "Delete from Projects where ProjectID = @ProjectID";
-            //        exe = db.Execute(data, new
-            //        {
-            //            ProjectID = id
-            //        });
-            //    }
-            //    return exe;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
             var projectDetail = (from project in _db.Projects
                                  where project.ProjectID == id
                                  select project).FirstOrDefault();
